@@ -1,0 +1,60 @@
+.header {
+  padding: 60px;
+/*   height: 450px; */
+  text-align: center;
+  background-image: url("https://southernchronicles.icebreaker.com/wp-content/uploads/2018/02/G%C3%A1sadalur-Village.jpg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  color: white;
+  font-size: 30px;
+}
+
+.content {
+  padding:20px;
+  max-width: 500px;
+  margin: auto;
+}
+
+body {
+  margin: 0;
+}
+
+/* Add a black background color to the top navigation */
+.topnav {
+    overflow: hidden;
+}
+
+/* Style the links inside the navigation bar */
+.topnav a {
+  float: left;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+  
+}
+
+/* Change the color of links on hover */
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+} */
+
+/* Add a color to the active/current link */
+.topnav a.active {
+  background-color: #04AA6D;
+  color: white;
+}
+
+/* Right-aligned section inside the top navigation */
+.topnav-right {
+  float: right;
+}
+
+.center {
+  text-align: center;
+}
+
+

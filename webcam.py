@@ -1,10 +1,10 @@
 import requests
 from geocoding import getGeocode
+from config import CAM_KEY
 
-AUTH_KEY = "4oAulVBpHcW2ILJPE6nPprmshj7c74wh"
 
 headers = {
-    "x-windy-key": AUTH_KEY
+    "x-windy-key": CAM_KEY
 }
 
 def getWebcam(location):
