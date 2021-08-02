@@ -1,10 +1,7 @@
 import requests
-from dummy import my_var
-from hotel import hotel_info
 from geocoding import getGeocode
 from geocoding import getManyIATA
 #from flights import flight_var
-from new_hotel import new_hotel
 
 headers = {
     'content-type': "application/json",
@@ -14,7 +11,6 @@ headers = {
 
 global min_price
 global max_price
-
 
 
 def travel_search():
@@ -99,10 +95,10 @@ def hotel_search():
     response = requests.request(
         "GET", url, headers=headers, params=querystring)
 		
-    return parse_hotel_search(response.json(), max_price)
+    return parse_hotel_search(response.json(), min_price, max_price)
 
 
-def parse_hotel_search(file_name, max_price):
+def parse_hotel_search(file_name, min_price, max_price):
 	results = {}
 	my_list = []
 	hotel_count = 0
@@ -111,8 +107,9 @@ def parse_hotel_search(file_name, max_price):
 		return "No Search Results were found for your query. Please try again"
 
 	for hotel in range(0, 5):
-		#print("MAX PRICE: ", max_price, "\n PRICES: ", int(file_name['data'][hotel]['hac_offers']['offers'][0]['display_price'][1:]))
-		if int(max_price) < int(file_name['data'][hotel]['hac_offers']['offers'][0]['display_price_int']):
+		if int(min_price) > int(file_name['data'][hotel]['hac_offers']['offers'][0]['display_price_int']):
+			pass
+		elif int(max_price) < int(file_name['data'][hotel]['hac_offers']['offers'][0]['display_price_int']):
 			pass
 		else:
 			results['Name'] = file_name['data'][hotel]['name']
