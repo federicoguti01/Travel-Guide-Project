@@ -45,8 +45,8 @@ flight_var = [
               "k":"LATEST_OUTBOUND_ARRIVAL"
            }
         ],
-        "c":false,
-        "f":false,
+        "c":False,
+        "f":False,
         "p":-1.0,
         "sh":"2220cd9977fa91d2e140c030977d43d1",
         "fi":-1,
@@ -124,8 +124,8 @@ flight_var = [
         }
      ],
      "air_watch_info":{
-        "sw":false,
-        "ws":false
+        "sw":False,
+        "ws":False
      },
      "disclaimers":[
         {
@@ -167,8 +167,8 @@ flight_var = [
               "dd":"2021-08-25",
               "o":"SEA",
               "d":"LGA",
-              "no":false,
-              "nd":false
+              "no":False,
+              "nd":False
            }
         ],
         "sid":"5a61cc62-cdd6-4d69-a636-839a22635809.47",
