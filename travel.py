@@ -5,30 +5,34 @@ from geocoding import getManyIATA
 
 headers = {
     'content-type': "application/json",
-    'x-rapidapi-key': "f888c871b1msh73f2e40214b8958p1399c0jsneedeb80a5574",
+    'x-rapidapi-key': "835ea1863cmsh8ec245f12ad64bap187695jsn701aabefa0f1",
     'x-rapidapi-host': "travel-advisor.p.rapidapi.com"
 }
+
 
 global min_price
 global max_price
 
 
 def travel_search():
-        url = "https://travel-advisor.p.rapidapi.com/locations/search"
-        user_input = input(
-            "Please enter the location to which you would like to travel: \n")
-        querystring = {
-            "query": user_input,
-            "limit": "30",
-            "offset": "0",
-            "units": "km",
-            "location_id": "1",
-            "currency": "USD",
-            "sort": "relevance",
-            "lang": "en_US"}
-        response = requests.request(
-            "GET", url, headers=headers, params=querystring)
-        return parse_travel_search(response.json())
+	try:
+			url = "https://travel-advisor.p.rapidapi.com/locations/search"
+			user_input = input(
+				"Please enter the location to which you would like to travel: \n")
+			querystring = {
+				"query": user_input,
+				"limit": "30",
+				"offset": "0",
+				"units": "km",
+				"location_id": "1",
+				"currency": "USD",
+				"sort": "relevance",
+				"lang": "en_US"}
+			response = requests.request(
+				"GET", url, headers=headers, params=querystring)
+			return parse_travel_search(response.json())
+	except:
+			print("Could not find the specified location. Please ensure your spelling is correct and try again.")
 
 
 def parse_travel_search(file_name):
@@ -71,8 +75,12 @@ def first_search(latitude, longitude, adults, rooms, checkin, nights):
 def hotel_search():
     url = "https://travel-advisor.p.rapidapi.com/hotels/list-by-latlng"
     my_var = travel_search()
-    latitude = my_var['Latitude']
-    longitude = my_var['Longitude']
+    location_name = my_var['Name']
+    #latitude = my_var['Latitude']
+    #longitude = my_var['Longitude']
+    geo_var = getGeocode(location_name)
+    latitude = geo_var[0]
+    longitude = geo_var[1]
     adults = input("How many adults will be staying?\n")
     rooms = input("How many rooms would you like?\n")
     checkin = input(
@@ -127,14 +135,19 @@ def parse_hotel_search(file_name, min_price, max_price):
 				results['Offer Price'] = "No offers currently available"
 
 			results['Tier(/5)'] = file_name['data'][hotel]['hotel_class']
-
+			
+			#print(file_name['data'][4])			
+				
 			try:
 				results['Rating'] = file_name['data'][hotel]['raw_ranking'][:4]
-			except BaseException:
+			except KeyError:
 			# using rating (rounded) instead of raw_ranking because some hotels
 			# do not have a raw_ranking field
 				results['Rating'] = file_name['data'][hotel]['rating']
+			except:
+				results['Rating'] = "No ratings are currently available"
 
+				
 			results['Number of Reviews'] = file_name['data'][hotel]['num_reviews']
 
 			try:
@@ -160,6 +173,7 @@ def flight_search():
       num_adults = 1
       print("That's not a number, we will assume one adult is traveling")
     home_airport_coor = getGeocode(home_input)
+    print(home_airport_coor)
     home_airport_code = getManyIATA(home_airport_coor)
     destination_airport_coor = getGeocode(destination_name)
     destination_airpot_code = getManyIATA(destination_airport_coor)
@@ -181,12 +195,58 @@ def parse_flights_search(file_name):
     results['Arrival To'] = file_name['airports'][0]['n']
     return results
 	
+	
+def attractions_search():
+		url = "https://travel-advisor.p.rapidapi.com/attractions/list-by-latlng"
+		my_var = travel_search()
+		latitude = my_var['Latitude']
+		longitude = my_var['Longitude']
+		querystring = {"longitude":longitude,"latitude":latitude,"lunit":"mi","currency":"USD","lang":"en_US"}
+		response = requests.request("GET", url, headers=headers, params=querystring)
+		
+		location_id = 0
+		count = 0
+		try:
+			while (int(location_id) == int(0)):
+				location_id = response.json()['data'][count]['location_id']
+				count += 1
+		except:
+			print("No locations found! Please try again. ")
+		
+		return response.json()
+		#return attraction_details(location_id)
+				
+		
+def attraction_details(location_id):
+		url = "https://travel-advisor.p.rapidapi.com/attractions/get-details"
+		querystring = {"location_id":location_id,"currency":"USD","lang":"en_US"}
+		response = requests.request("GET", url, headers=headers, params=querystring)
+
+		return parse_attraction_details(response.json())
+	
+	
+def parse_attraction_details(file_name):
+		results = {}
+		my_list = []
+		
+		results['Name'] = file_name['name']
+		results['Latitude'] = file_name['latitude']
+		results['Longitude'] = file_name['longitude']
+		results['Image'] = file_name['photo']['images']['original']['url']
+		results['Description'] = file_name['description']
+		results['URL'] = file_name['web_url']
+		try:
+			results['Rating'] = file_name['raw_ranking']
+		except:
+			results['Rating'] = file_name['rating']
+				
+		return results
 
 
 if __name__ == '__main__':
-	#my_string = hotel_search()
-	new_string = hotel_search()
-	print(new_string)
-	#print(new_hotel_search())
-	#print(parse_new_hotel_search(new_hotel))
 	#print(travel_search())
+	#new_string = hotel_search()
+	#print(new_string)
+	print(attractions_search())
+  #flight_search()
+	
