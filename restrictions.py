@@ -7,10 +7,10 @@ from config import AUTH_KEY
 def getRestrictions(destination):
 
     #     originCoords = getGeocode(origin)
-    destCoords = getGeocode(destination)
+#     destCoords = getGeocode(destination)
 
 #     originIATA = getIATA(originCoords)
-    destIATA = getManyIATA(destCoords)
+    destIATA = getManyIATA(destination)
 
     URL = 'https://covid-api.thinklumo.com/data?airport='
 
@@ -22,6 +22,7 @@ def getRestrictions(destination):
         decoder = requests.get(URL + iata, headers=headers)
         if decoder.status_code == 200:
             dJSON = decoder.json()
+#             print(dJSON)
             return dJSON
 
     return None
@@ -34,8 +35,10 @@ def getAdvisoryDF(dJSON):
 
     return df[FIELDS]
 
+def getCountryName(dJSON):
+    return dJSON['airport']['country_name']
 
-def getChartURL(dJSON):
+def getChartUrl(dJSON):
     if dJSON['covid_stats']['county_district'] is not None:
         return {
           "county" : dJSON['covid_stats']['county_district']['chart_url'],
@@ -73,7 +76,8 @@ def getEntryExitDF(dJSON):
 
 def main():
     destination = input('Enter a destination: ')
-    jsonResponse = getRestrictions(destination)
+    loc = getGeocode(destination)
+    jsonResponse = getRestrictions(loc)
 #     print(jsonResponse)
     if(jsonResponse is not None):
         # more options can be specified also
@@ -81,7 +85,7 @@ def main():
                                None):
             print(getAdvisoryDF(jsonResponse))
             print(getEntryExitDF(jsonResponse))
-        print("Covid Data Chart(s):", getChartURL(jsonResponse))
+        print("Covid Data Chart(s):", getChartUrl(jsonResponse))
         print("Risk Level:", getRiskLevel(jsonResponse))
     else:
         print('No information could be retrieved.')

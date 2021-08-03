@@ -22,21 +22,55 @@ def getLufthansaAuth():
 
     return headers
 
+def reverseGeocode(lat, lng):
+    GEO_URL = ('https://maps.googleapis.com/maps/api/geocode/json?'
+          f'latlng={lat},{lng}&key={GEO_KEY}')
+    decoder = requests.get(GEO_URL)
+    dJSON = decoder.json()
+    
+    if dJSON['status'] == 'OK':
+
+        address = dJSON['results'][0]['address_components']
+        name = ''
+        #         print(dJSON)
+        for component in address:
+            if 'country' in component['types']:
+                name += component['long_name']
+            elif 'street_number' in component['types']:
+                name += component['long_name'] + " "
+            elif 'postal_code' in component['types']:
+                name += ' ' + component['long_name']
+            elif
+            else:
+                name += component['short_name'] + ", "
+
+        return name
+
+    return None
 
 def getGeocode(location):
     GEO_URL = ('https://maps.googleapis.com/maps/api/geocode/json?'
                f'address={location}&key={GEO_KEY}')
     decoder = requests.get(GEO_URL)
     dJSON = decoder.json()
+    
+    if dJSON['status'] == 'OK':
 
-#     address = dJSON['results'][0]['address_components']
-#     country = ''
-#     for component in address:
-#         if 'country' in component['types']:
-#             countryCode = component['short_name']
-#     print(dJSON)
-    geoloc = dJSON['results'][0]['geometry']['location']
-    return [geoloc['lat'], geoloc['lng']]
+        address = dJSON['results'][0]['address_components']
+        name = ''
+#         print(dJSON)
+        for component in address:
+            if 'locality' in component['types']:
+                name += component['long_name'] + ", "
+            if 'administrative_area_level_1' in component['types']:
+                name += component['long_name'] + ", "
+            if 'country' in component['types']:
+                name += component['long_name']
+
+        geoloc = dJSON['results'][0]['geometry']['location']
+        return [geoloc['lat'], geoloc['lng'], name]
+    
+    return None
 
 
 def getManyIATA(coords):
@@ -66,7 +100,9 @@ def main():
     coords = getGeocode(location)
     print('Coordinates:', coords)
     print('Bad IATA >:( ->', getIATA(coords))
-    print(getManyIATA(coords))
+    print('Good IATA ->', getManyIATA(coords))
+    
+    print("Reverse geocode:", reverseGeocode(coords[0],coords[1]))
 
 
 if __name__ == "__main__":

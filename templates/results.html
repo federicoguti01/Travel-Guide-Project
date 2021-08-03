@@ -1,0 +1,55 @@
+{% extends "layout.html" %}
+{% block content %}
+<input type="button" value="Go Back!" onclick="history.back(-1)" />
+
+<div style = "margin: 50px;">
+  <h1 style= "font-size: 30px;">Traveling to: {{ name }}</h1>
+  <p class="whitespace">
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="card">
+        <img class="card-img-top" src="https://southernchronicles.icebreaker.com/wp-content/uploads/2018/02/G%C3%A1sadalur-Village.jpg">
+        <div class="card-body">
+          <h5 class="card-title">WebCam</h5>
+          <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+          <a href="/cam/{{ lat }}&{{ lng }}" class="btn btn-outline-dark">See webcams</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="card">
+        <img class="card-img-top" src="https://southernchronicles.icebreaker.com/wp-content/uploads/2018/02/G%C3%A1sadalur-Village.jpg">
+        <div class="card-body">
+          <h5 class="card-title">Covid Restrictions</h5>
+          <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+          <a href="/restrictions/{{ lat }}&{{ lng }}" class="btn btn-outline-dark">View Covid Restrictions</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p class="whitespace">
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="card">
+        <img class="card-img-top" src="https://southernchronicles.icebreaker.com/wp-content/uploads/2018/02/G%C3%A1sadalur-Village.jpg">
+        <div class="card-body">
+          <h5 class="card-title">Hotels</h5>
+          <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+          <a href="/travel/search/{{ lat }}&{{ lng }}" class="btn btn-outline-dark">View Hotels</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="card">
+        <img class="card-img-top" src="https://southernchronicles.icebreaker.com/wp-content/uploads/2018/02/G%C3%A1sadalur-Village.jpg">
+        <div class="card-body">
+          <h5 class="card-title">Flights</h5>
+          <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+          <a href="#" class="btn btn-outline-dark">View Flights</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}

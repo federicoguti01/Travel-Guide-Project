@@ -1,11 +1,15 @@
-from flask import Flask, render_template, url_for, flash, redirect
-from forms import RegistrationForm, LoginForm, LocationSearch
+from flask import Flask, render_template, url_for, flash, redirect, request
+from forms import RegistrationForm, LoginForm, LocationSearchForm, HotelSearchForm
 from flask_sqlalchemy import SQLAlchemy
-from flask import Flask
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager, UserMixin, login_user, login_required
 from flask_login import logout_user, current_user
 from flask_behind_proxy import FlaskBehindProxy
+from geocoding import getGeocode, getManyIATA, reverseGeocode
+from restrictions import getRestrictions, getAdvisoryDF, getEntryExitDF
+from restrictions import getChartUrl, getRiskLevel, getCountryName
+from webcam import getWebcam, getWebLink, getTitle
+from travel import travel_search, hotel_search, flight_search, parse_attraction_details
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'e0f41607df67b2931da80b26f69b3f96'
@@ -74,16 +78,75 @@ def login():
             return redirect(url_for('home'))
     return render_template('login.html', title='Login', form=form)
 
-  
+@app.route('/search', methods=['GET', 'POST'])
+def search():
+    search = LocationSearchForm()
+    if request.method == 'POST':
+        coords = getGeocode(search.data['search'])
+        if coords is None:
+            return '<div class="content" style="font-size: 20px; text-align: center;" <h1>No results found</h1> </div>'
+        return search_results(coords[0], coords[1], coords[2])
+
+    return render_template('search.html', form=search)
+
+@app.route('/results/<lat>&<lng>&<name>')
+def search_results(lat, lng, name):
+#     if search is None:
+#         return '<div class="content" style="font-size: 20px; text-align: center;" <h1>No results found</h1> </div>'
+    
+    return render_template(
+        'results.html',
+        name=name, lat=lat, lng=lng)
+
+@app.route('/cam/<lat>&<lng>&<name>')
+def show_cam_page(lat, lng, name): 
+    coords = [lat, lng]
+    decoder = getWebcam(coords)
+    titles = getTitle(decoder)
+    if not titles:
+        return f'<div class="content" style="font-size: 20px; text-align: center; padding: 20px" <h1>No results found for "{name}". Try narrowing search.</h1> </div>'
+    return render_template('cam.html', title=titles, cams=getWebLink(decoder))
+
+@app.route('/restrictions/<lat>&<lng>')
+def show_restrictions_page(lat, lng):
+    coords = [lat,lng]
+    covid_info = getRestrictions(coords)
+    return render_template(
+        'restrictions.html',
+        tables=[
+            getAdvisoryDF(covid_info).to_html(
+                header="true",
+                escape=False),
+            getEntryExitDF(covid_info).to_html(
+                header="true",
+                escape=False)],
+        charts=getChartUrl(covid_info),
+        country=getCountryName(covid_info),
+        risk=getRiskLevel(covid_info))
+
+@app.route('/travel/search/<lat>&<lng>', methods=['GET', 'POST'])
+def travel_search(lat, lng):
+    search = HotelSearchForm()
+    if search.validate_on_submit():
+#           if request.method == 'POST':
+        print(search.data)
+        return show_travel_page(lat, lng, search.adults.data,
+                                search.rooms.data, search.date.data,
+                                search.nights.data, search.minPrice.data,
+                                search.maxPrice.data)
+
+    return render_template('travel.html', form=search)
+
+@app.route('/travel/results')
+def show_travel_page(lat, lng, adults, rooms, date, nights, minPrice, maxPrice):
+    hotel = hotel_search(lat, lng, adults, rooms, date, nights, minPrice, maxPrice)
+    hotel['name']
+    return render_template ('hotels.html', hotels = hotel)
+
+    
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
-  
-@app.route("/locations")
-def locations():
-    form = LocationSearch()
-    return render_template('locations.html', form=form)
-  
-  
+
 if __name__ == '__main__':
     app.run(debug=True, host="0.0.0.0")

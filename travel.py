@@ -1,6 +1,7 @@
 import requests
 from geocoding import getGeocode
 from geocoding import getManyIATA
+from geocoding import reverseGeocode
 #from flights import flight_var
 
 headers = {
@@ -14,13 +15,13 @@ global min_price
 global max_price
 
 
-def travel_search():
+def travel_search(location):
 	try:
 			url = "https://travel-advisor.p.rapidapi.com/locations/search"
-			user_input = input(
-				"Please enter the location to which you would like to travel: \n")
+			#user_input = input(
+				#"Please enter the location to which you would like to travel: \n")
 			querystring = {
-				"query": user_input,
+				"query": location,
 				"limit": "30",
 				"offset": "0",
 				"units": "km",
@@ -72,15 +73,16 @@ def first_search(latitude, longitude, adults, rooms, checkin, nights):
         "GET", url, headers=headers, params=querystring)
 	
 	
-def hotel_search():
+def hotel_search(latitude, longitude, adults, rooms, checkin, nights, min_price, max_price):
     url = "https://travel-advisor.p.rapidapi.com/hotels/list-by-latlng"
-    my_var = travel_search()
-    location_name = my_var['Name']
+    #my_var = travel_search(location)
+    #location_name = my_var['Name']
     #latitude = my_var['Latitude']
     #longitude = my_var['Longitude']
-    geo_var = getGeocode(location_name)
-    latitude = geo_var[0]
-    longitude = geo_var[1]
+    #geo_var = getGeocode(location)
+    #latitude = geo_var[0]
+    #longitude = geo_var[1]
+    """
     adults = input("How many adults will be staying?\n")
     rooms = input("How many rooms would you like?\n")
     checkin = input(
@@ -88,6 +90,7 @@ def hotel_search():
     nights = input("How many nights would you like to stay?\n")
     min_price = input("Please enter your minimum price per night\n")
     max_price = input("Please enter your maximum price per night\n")
+    """
     first_search(latitude, longitude, adults, rooms, checkin, nights)
     querystring = {
         "latitude": latitude,
@@ -112,17 +115,18 @@ def parse_hotel_search(file_name, min_price, max_price):
 	hotel_count = 0
 	
 	if file_name['data'] == []:
-		return "No Search Results were found for your query. Please try again"
+		return None
 
 	for hotel in range(0, 5):
 		if int(min_price) > int(file_name['data'][hotel]['hac_offers']['offers'][0]['display_price_int']):
 			pass
-		elif int(max_price) < int(file_name['data'][hotel]['hac_offers']['offers'][0]['display_price_int']):
+		if int(max_price) < int(file_name['data'][hotel]['hac_offers']['offers'][0]['display_price_int']):
 			pass
 		else:
 			results['Name'] = file_name['data'][hotel]['name']
-			results['Latitude'] = file_name['data'][hotel]['latitude']
-			results['Longitude'] = file_name['data'][hotel]['longitude']
+			Latitude = file_name['data'][hotel]['latitude']
+			Longitude = file_name['data'][hotel]['longitude']
+			results['Address'] = reverseGeocode(Latitude, Longitude)
 			try:
 				results['Price Range (/night)'] = file_name['data'][hotel]['price']
 			except:
@@ -140,10 +144,10 @@ def parse_hotel_search(file_name, min_price, max_price):
 				
 			try:
 				results['Rating'] = file_name['data'][hotel]['raw_ranking'][:4]
-			except KeyError:
+			#except KeyError:
 			# using rating (rounded) instead of raw_ranking because some hotels
 			# do not have a raw_ranking field
-				results['Rating'] = file_name['data'][hotel]['rating']
+				#results['Rating'] = file_name['data'][hotel]['rating']
 			except:
 				results['Rating'] = "No ratings are currently available"
 
@@ -213,8 +217,8 @@ def attractions_search():
 		except:
 			print("No locations found! Please try again. ")
 		
-		return response.json()
-		#return attraction_details(location_id)
+		#return response.json()
+		return attraction_details(location_id)
 				
 		
 def attraction_details(location_id):
@@ -232,7 +236,12 @@ def parse_attraction_details(file_name):
 		results['Name'] = file_name['name']
 		results['Latitude'] = file_name['latitude']
 		results['Longitude'] = file_name['longitude']
-		results['Image'] = file_name['photo']['images']['original']['url']
+		
+		try:
+			results['Image'] = file_name['photo']['images']['original']['url']
+		except:
+			results['Image'] = "No images available"
+		
 		results['Description'] = file_name['description']
 		results['URL'] = file_name['web_url']
 		try:
@@ -244,9 +253,8 @@ def parse_attraction_details(file_name):
 
 
 if __name__ == '__main__':
-	#print(travel_search())
-	#new_string = hotel_search()
-	#print(new_string)
-	print(attractions_search())
+	#print(travel_search("London"))
+	print(hotel_search(51.51924, -0.096654, 4, 2, "2021-10-11", 3, 100, 300))
+	#print(attractions_search())
   #flight_search()
 	

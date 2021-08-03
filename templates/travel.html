@@ -1,0 +1,100 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="content center">
+    <form method="POST" action="">
+        {{ form.hidden_tag() }}
+        <fieldset class="form-group">
+
+ <div class="form-group">
+ {{ form.adults.label(class="form-control-label") }}
+ {% if form.adults.errors %}
+   {{ form.adults(class="form-control form-control-lg is-invalid") }}
+   <div class="invalid-feedback">
+     {% for error in form.adults.errors%}
+         <span>{{error}}</span>
+     {% endfor %}
+   </div>
+{% else %}
+   {{ form.adults(class="form-control form-control-lg") }}
+{% endif %}
+</div>
+
+<div class="form-group">
+{{ form.rooms.label(class="form-control-label") }}
+{% if form.rooms.errors %}
+ {{ form.rooms(class="form-control form-control-lg is-invalid") }}
+ <div class="invalid-feedback">
+   {% for error in form.rooms.errors%}
+       <span>{{error}}</span>
+   {% endfor %}
+ </div>
+{% else %}
+ {{ form.rooms(class="form-control form-control-lg") }}
+{% endif %}
+</div>
+          
+<div class="form-group">
+{{ form.date.label(class="form-control-label") }}
+{% if form.date.errors %}
+ {{ form.date(class="form-control form-control-lg is-invalid") }}
+ <div class="invalid-feedback">
+   {% for error in form.date.errors%}
+       <span>{{error}}</span>
+   {% endfor %}
+ </div>
+{% else %}
+ {{ form.date(class="form-control form-control-lg") }}
+{% endif %}
+</div>
+          
+<div class="form-group">
+{{ form.nights.label(class="form-control-label") }}
+{% if form.nights.errors %}
+ {{ form.nights(class="form-control form-control-lg is-invalid") }}
+ <div class="invalid-feedback">
+   {% for error in form.nights.errors%}
+       <span>{{error}}</span>
+   {% endfor %}
+ </div>
+{% else %}
+ {{ form.nights(class="form-control form-control-lg") }}
+{% endif %}
+</div>
+       
+<div class="form-group">
+{{ form.minPrice.label(class="form-control-label") }}
+{% if form.minPrice.errors %}
+ {{ form.minPrice(class="form-control form-control-lg is-invalid") }}
+ <div class="invalid-feedback">
+   {% for error in form.minPrice.errors%}
+       <span>{{error}}</span>
+   {% endfor %}
+ </div>
+{% else %}
+ {{ form.minPrice(class="form-control form-control-lg") }}
+{% endif %}
+</div>
+          
+<div class="form-group">
+{{ form.maxPrice.label(class="form-control-label") }}
+{% if form.maxPrice.errors %}
+ {{ form.maxPrice(class="form-control form-control-lg is-invalid") }}
+ <div class="invalid-feedback">
+   {% for error in form.maxPrice.errors%}
+       <span>{{error}}</span>
+   {% endfor %}
+ </div>
+{% else %}
+ {{ form.maxPrice(class="form-control form-control-lg") }}
+{% endif %}
+</div>
+          
+</fieldset>
+    <div class="form-group">
+       {{ form.submit(class="btn btn-outline-info") }}
+    </div>
+   </form>
+</div>
+{% endblock content %}
+
+          

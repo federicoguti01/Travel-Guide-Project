@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, BooleanField
+from wtforms import StringField, PasswordField, SubmitField, BooleanField, IntegerField, DateField
 from wtforms.validators import DataRequired, Length, Email, EqualTo
 
 class LoginForm(FlaskForm):
@@ -20,7 +20,27 @@ class RegistrationForm(FlaskForm):
                                      validators=[DataRequired(), EqualTo('password')])
     submit = SubmitField('Register')
     
-class LocationSearch(FlaskForm):
-  search = StringField(validators=[DataRequired()])
-#   submit = SubmitField('Register')
+class LocationSearchForm(FlaskForm):
+    search = StringField('Search for a location:',
+                        validators=[DataRequired()])
+    submit = SubmitField('Search')
+    
+class HotelSearchForm(FlaskForm):
+    adults = IntegerField('How many adults will be staying?',
+                        validators=[DataRequired()])
+    rooms = IntegerField('How many rooms would you like??',
+                        validators=[DataRequired()])
+    date = StringField('When would you like to check in? Please enter in the following format: YYYY-MM-DD',
+                     validators=[DataRequired()])
+    nights = IntegerField('How many nights would you like to stay?',
+                          validators=[DataRequired()])
+    minPrice = IntegerField('Please enter your minimum price per night',
+                            validators=[DataRequired()])
+    maxPrice = IntegerField('Please enter your maximum price per night',
+														validators=[DataRequired()])
+    submit = SubmitField('Search')
+
+    # class FlightSearchForm(FlaskForm):
+
+   #    submit = SubmitField('Search')
   

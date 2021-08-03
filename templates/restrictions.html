@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+{% block content %}
+    <h2>Covid Risk Level for {{ country }}: {{ risk }}</h2>
+    <hr>
+    <h3>Charts</h3>
+    {% for scope, chart in charts.items() %}
+           <h4>Covid statistics chart for {{ scope }} (1 year)</h4>
+           <img src="{{ chart }}" style=max-width:800px;max-height:800px;>
+    {% endfor %}
+    <hr>
+    <h3>Table</h3>
+    {% for table in tables %}
+                {{ table|safe }}
+    {% endfor %}
+{% endblock content %}
