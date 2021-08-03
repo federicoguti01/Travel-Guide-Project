@@ -2,7 +2,7 @@ import requests
 from geocoding import getGeocode
 from geocoding import getManyIATA
 from geocoding import reverseGeocode
-#from flights import flight_var
+from geocoding import reverseGeoCity
 
 headers = {
     'content-type': "application/json",
@@ -16,24 +16,24 @@ global max_price
 
 
 def travel_search(location):
-	try:
-			url = "https://travel-advisor.p.rapidapi.com/locations/search"
-			#user_input = input(
-				#"Please enter the location to which you would like to travel: \n")
-			querystring = {
-				"query": location,
-				"limit": "30",
-				"offset": "0",
-				"units": "km",
-				"location_id": "1",
-				"currency": "USD",
-				"sort": "relevance",
-				"lang": "en_US"}
-			response = requests.request(
-				"GET", url, headers=headers, params=querystring)
-			return parse_travel_search(response.json())
-	except:
-			print("Could not find the specified location. Please ensure your spelling is correct and try again.")
+    try:
+        url = "https://travel-advisor.p.rapidapi.com/locations/search"
+        #user_input = input(
+        # "Please enter the location to which you would like to travel: \n")
+        querystring = {
+                      "query": location,
+                      "limit": "30",
+                      "offset": "0",
+                      "units": "km",
+                      "location_id": "1",
+                      "currency": "USD",
+                      "sort": "relevance",
+                      "lang": "en_US"}
+        response = requests.request(
+          "GET", url, headers=headers, params=querystring)
+        return parse_travel_search(response.json())
+    except:
+        return "No information is currently available for the inputted location. Please ensure your spelling is correct and try again.\n"
 
 
 def parse_travel_search(file_name):
@@ -58,55 +58,57 @@ def parse_travel_search(file_name):
 def first_search(latitude, longitude, adults, rooms, checkin, nights):
 		url = "https://travel-advisor.p.rapidapi.com/hotels/list-by-latlng"
 		querystring = {
-        "latitude": latitude,
-        "longitude": longitude,
-        "lang": "en_US",
-        "limit": "5",
-        "adults": adults,
-        "rooms": rooms,
-        "currency": "USD",
-        "checkin": checkin,
-        "subcategory": "hotel,bb,specialty",
-        "nights": nights}
+                  "latitude": latitude,
+                  "longitude": longitude,
+                  "lang": "en_US",
+                  "limit": "5",
+                  "adults": adults,
+                  "rooms": rooms,
+                  "currency": "USD",
+                  "checkin": checkin,
+                  "subcategory": "hotel,bb,specialty",
+                  "nights": nights}
 		
 		response = requests.request(
         "GET", url, headers=headers, params=querystring)
 	
 	
 def hotel_search(latitude, longitude, adults, rooms, checkin, nights, min_price, max_price):
-    url = "https://travel-advisor.p.rapidapi.com/hotels/list-by-latlng"
-    #my_var = travel_search(location)
-    #location_name = my_var['Name']
-    #latitude = my_var['Latitude']
-    #longitude = my_var['Longitude']
-    #geo_var = getGeocode(location)
-    #latitude = geo_var[0]
-    #longitude = geo_var[1]
-    """
-    adults = input("How many adults will be staying?\n")
-    rooms = input("How many rooms would you like?\n")
-    checkin = input(
-        "When would you like to check in? Please enter in the following format: YYYY-MM-DD\n")
-    nights = input("How many nights would you like to stay?\n")
-    min_price = input("Please enter your minimum price per night\n")
-    max_price = input("Please enter your maximum price per night\n")
-    """
-    first_search(latitude, longitude, adults, rooms, checkin, nights)
-    querystring = {
-        "latitude": latitude,
-        "longitude": longitude,
-        "lang": "en_US",
-        "limit": "5",
-        "adults": adults,
-        "rooms": rooms,
-        "currency": "USD",
-        "checkin": checkin,
-        "subcategory": "hotel,bb,specialty",
-        "nights": nights}
-    response = requests.request(
-        "GET", url, headers=headers, params=querystring)
-		
-    return parse_hotel_search(response.json(), min_price, max_price)
+    try:
+        url = "https://travel-advisor.p.rapidapi.com/hotels/list-by-latlng"
+        #my_var = travel_search(location)
+        #location_name = my_var['Name']
+        #latitude = my_var['Latitude']
+        #longitude = my_var['Longitude']
+        #geo_var = getGeocode(location)
+        #latitude = geo_var[0]
+        #longitude = geo_var[1]
+        """
+        adults = input("How many adults will be staying?\n")
+        rooms = input("How many rooms would you like?\n")
+        checkin = input(
+            "When would you like to check in? Please enter in the following format: YYYY-MM-DD\n")
+        nights = input("How many nights would you like to stay?\n")
+        min_price = input("Please enter your minimum price per night\n")
+        max_price = input("Please enter your maximum price per night\n")
+        """
+        first_search(latitude, longitude, adults, rooms, checkin, nights)
+        querystring = {
+            "latitude": latitude,
+            "longitude": longitude,
+            "lang": "en_US",
+            "limit": "5",
+            "adults": adults,
+            "rooms": rooms,
+            "currency": "USD",
+            "checkin": checkin,
+            "subcategory": "hotel,bb,specialty",
+            "nights": nights}
+        response = requests.request(
+            "GET", url, headers=headers, params=querystring)
+        return parse_hotel_search(response.json(), min_price, max_price)
+    except:
+        return "No hotels could be found for your search. Please try again.\n"
 
 
 def parse_hotel_search(file_name, min_price, max_price):
@@ -118,9 +120,7 @@ def parse_hotel_search(file_name, min_price, max_price):
 		return None
 
 	for hotel in range(0, 5):
-		if int(min_price) > int(file_name['data'][hotel]['hac_offers']['offers'][0]['display_price_int']):
-			pass
-		if int(max_price) < int(file_name['data'][hotel]['hac_offers']['offers'][0]['display_price_int']):
+		if int(min_price) > int(file_name['data'][hotel]['hac_offers']['offers'][0]['display_price_int']) or int(max_price) < int(file_name['data'][hotel]['hac_offers']['offers'][0]['display_price_int']):
 			pass
 		else:
 			results['Name'] = file_name['data'][hotel]['name']
@@ -128,17 +128,17 @@ def parse_hotel_search(file_name, min_price, max_price):
 			Longitude = file_name['data'][hotel]['longitude']
 			results['Address'] = reverseGeocode(Latitude, Longitude)
 			try:
-				results['Price Range (/night)'] = file_name['data'][hotel]['price']
+				results['Price'] = file_name['data'][hotel]['price'] # per night
 			except:
-				pass
-			results['Availability'] = file_name['data'][hotel]['hac_offers']['availability']
+				results['Price'] = "Price information not available"
+			results['Availability'] = file_name['data'][hotel]['hac_offers']['availability'].upper()
 			try:
 				results['Offer Price'] = file_name['data'][hotel]['hac_offers']['offers'][0]['display_price']
 				results['Offer Link'] = file_name['data'][hotel]['hac_offers']['offers'][0]['link']
 			except BaseException:
 				results['Offer Price'] = "No offers currently available"
 
-			results['Tier(/5)'] = file_name['data'][hotel]['hotel_class']
+			results['Tier'] = int(float(file_name['data'][hotel]['hotel_class']))
 			
 			#print(file_name['data'][4])			
 				
@@ -150,64 +150,69 @@ def parse_hotel_search(file_name, min_price, max_price):
 				#results['Rating'] = file_name['data'][hotel]['rating']
 			except:
 				results['Rating'] = "No ratings are currently available"
-
-				
-			results['Number of Reviews'] = file_name['data'][hotel]['num_reviews']
+	
+			results['NumReviews'] = file_name['data'][hotel]['num_reviews']
 
 			try:
 				results['Cancellation Policy'] = file_name['data'][hotel]['hac_offers']['offers'][0]['free_cancellation_detail']
 			except BaseException:
 				results['Cancellation Policy'] = "This hotel does not offer a free cancellation policy"
+		
+			try:
+				results['Image'] = file_name['data'][hotel]['photo']['images']['original']['url']
+			except:
+				results['Image'] = ('https://intersections.humanities.ufl.edu/wp-content/u'
+                            'ploads/2020/07/112815904-stock-vector-no-image-av'
+                            'ailable-icon-flat-vector-illustration-1.jpg')
 
 			my_list.append(results.copy())
-
 	return my_list
 
 
 
-def flight_search():
-    my_var = travel_search()    
-    destination_name = my_var['Name']
-    home_input = input("Please enter the location to which you are departing from: \n")
-    departure_date = input("When would you like to depart? Please enter in the following format: YYYY-MM-DD\n")
-    num_adults = input("How many adults will be traveling?: \n")
-    try:
-      val = int(num_adults)
-    except ValueError:
-      num_adults = 1
-      print("That's not a number, we will assume one adult is traveling")
-    home_airport_coor = getGeocode(home_input)
-    print(home_airport_coor)
+def flight_search(lat, lang, depart, adults, date):
+    # my_var = travel_search()    
+    # destination_name = my_var['Name']
+    # home_input = input("Please enter the location to which you are departing from: \n")
+    # departure_date = input("When would you like to depart? Please enter in the following format: YYYY-MM-DD\n")
+    # num_adults = input("How many adults will be traveling?: \n")
+    # try:
+    #     val = int(num_adults)
+    # except ValueError:
+    #     num_adults = 1
+    #    print("That's not a number, we will assume one adult is traveling")
+    home_airport_coor = getGeocode(depart)
     home_airport_code = getManyIATA(home_airport_coor)
+    destination_name = reverseGeoCity(lat, lang)
     destination_airport_coor = getGeocode(destination_name)
     destination_airpot_code = getManyIATA(destination_airport_coor)
     url = "https://travel-advisor.p.rapidapi.com/flights/create-session"
     try:
-      querystring = {"o1":home_airport_code,"d1":destination_airpot_code,"dd1":departure_date,"currency":"USD","ta":num_adults}
-      response = requests.request("GET", url, headers=headers, params=querystring)
-      return parse_flights_search(response.json())
+        querystring = {"o1":home_airport_code,"d1":destination_airpot_code,"dd1":date,"currency":"USD","ta":adults}
+        response = requests.request("GET", url, headers=headers, params=querystring)
+        return parse_flights_search(response.json())
     except:
-      print("Invalid Response")
+        print("Invalid Response")
     return parse_flights_search(response.json())
     
     
 
 def parse_flights_search(file_name):
     results = {} 
-    results['URL']= file_name['search_url']
+    results['URL'] = file_name['search_url']
     results['Departing From'] = file_name['airports'][1]['n']
     results['Arrival To'] = file_name['airports'][0]['n']
     return results
 	
 	
-def attractions_search():
+def attractions_search(location):
 		url = "https://travel-advisor.p.rapidapi.com/attractions/list-by-latlng"
-		my_var = travel_search()
-		latitude = my_var['Latitude']
-		longitude = my_var['Longitude']
+		geo_var = getGeocode(location)
+		latitude = geo_var[0]
+		longitude = geo_var[1]
 		querystring = {"longitude":longitude,"latitude":latitude,"lunit":"mi","currency":"USD","lang":"en_US"}
 		response = requests.request("GET", url, headers=headers, params=querystring)
-		
+
 		location_id = 0
 		count = 0
 		try:
@@ -216,7 +221,7 @@ def attractions_search():
 				count += 1
 		except:
 			print("No locations found! Please try again. ")
-		
+
 		#return response.json()
 		return attraction_details(location_id)
 				
@@ -253,8 +258,8 @@ def parse_attraction_details(file_name):
 
 
 if __name__ == '__main__':
-	#print(travel_search("London"))
-	print(hotel_search(51.51924, -0.096654, 4, 2, "2021-10-11", 3, 100, 300))
-	#print(attractions_search())
-  #flight_search()
+	print(travel_search("Kingston, Jamaica"))
+ 	#print(hotel_search(51.51924, -0.096654, 4, 2, "2021-10-11", 3, 100, 300))
+	#print(attractions_search("Berlin"))
+  #print(flight_search())
 	

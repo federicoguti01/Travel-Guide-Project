@@ -1,5 +1,5 @@
 attractions = {
-    'location_id':'532100',
+    'location_id': '532100',
     'name':'Freedom Tower at Miami Dade College',
     'latitude':'25.7803',
     'longitude':'-80.18967',
@@ -55,7 +55,7 @@ attractions = {
                 'large':'https://www.tripadvisor.com/img/cdsi/img2/awards/CERTIFICATE_OF_EXCELLENCE_2020_en_US_large-0-5.jpg'
             },
             'categories':[
-                
+   
             ],
             'display_name':'Certificate of Excellence 2020'
         },

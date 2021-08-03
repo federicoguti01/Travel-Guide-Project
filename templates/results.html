@@ -3,7 +3,7 @@
 <input type="button" value="Go Back!" onclick="history.back(-1)" />
 
 <div style = "margin: 50px;">
-  <h1 style= "font-size: 30px;">Traveling to: {{ name }}</h1>
+  <h1 class = "center background" style= "font-size: 30px;">Traveling to: {{ name }}</h1>
   <p class="whitespace">
   <div class="row">
     <div class="col-sm-6">
@@ -11,8 +11,8 @@
         <img class="card-img-top" src="https://southernchronicles.icebreaker.com/wp-content/uploads/2018/02/G%C3%A1sadalur-Village.jpg">
         <div class="card-body">
           <h5 class="card-title">WebCam</h5>
-          <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-          <a href="/cam/{{ lat }}&{{ lng }}" class="btn btn-outline-dark">See webcams</a>
+          <p class="card-text">View webcams of nearby areas to gather a more accurate represention of the desired location.</p>
+          <a href="/cam/{{ lat }}&{{ lng }}" class="btn btn-outline-dark">View webcams</a>
         </div>
       </div>
     </div>
@@ -46,7 +46,7 @@
         <div class="card-body">
           <h5 class="card-title">Flights</h5>
           <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-          <a href="#" class="btn btn-outline-dark">View Flights</a>
+          <a href="/flights/search/{{ lat }}&{{ lng }}" class="btn btn-outline-dark">View Flights</a>
         </div>
       </div>
     </div>

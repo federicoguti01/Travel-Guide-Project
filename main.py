@@ -1,5 +1,5 @@
 from flask import Flask, render_template, url_for, flash, redirect, request
-from forms import RegistrationForm, LoginForm, LocationSearchForm, HotelSearchForm
+from forms import RegistrationForm, LoginForm, LocationSearchForm, HotelSearchForm, FlightSearchForm
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager, UserMixin, login_user, login_required
@@ -9,7 +9,7 @@ from geocoding import getGeocode, getManyIATA, reverseGeocode
 from restrictions import getRestrictions, getAdvisoryDF, getEntryExitDF
 from restrictions import getChartUrl, getRiskLevel, getCountryName
 from webcam import getWebcam, getWebLink, getTitle
-from travel import travel_search, hotel_search, flight_search, parse_attraction_details
+from travel import travel_search, hotel_search, flight_search
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'e0f41607df67b2931da80b26f69b3f96'
@@ -43,8 +43,8 @@ def about():
 @app.route("/register", methods=['GET', 'POST'])
 def register():
     form = RegistrationForm()
-    if form.validate_on_submit(): # checks if entries are valid
-        user = User(username=form.username.data, email=form.email.data, 
+    if form.validate_on_submit():  # checks if entries are valid
+        user = User(username=form.username.data, email=form.email.data,
                     password=bcrypt.generate_password_hash(form.password.data).decode('utf-8'))
         try:
             db.session.add(user)
@@ -85,22 +85,22 @@ def search():
         coords = getGeocode(search.data['search'])
         if coords is None:
             return '<div class="content" style="font-size: 20px; text-align: center;" <h1>No results found</h1> </div>'
-        return search_results(coords[0], coords[1], coords[2])
+        return search_results(coords)
 
     return render_template('search.html', form=search)
 
-@app.route('/results/<lat>&<lng>&<name>')
-def search_results(lat, lng, name):
-#     if search is None:
-#         return '<div class="content" style="font-size: 20px; text-align: center;" <h1>No results found</h1> </div>'
+@app.route('/results/<lat>&<lng>')
+def search_results(coords):
+    # if search is None:
+    #     return '<div class="content" style="font-size: 20px; text-align: center;" <h1>No results found</h1> </div>'
     
     return render_template(
-        'results.html',
-        name=name, lat=lat, lng=lng)
+        'results.html', name=coords[2], lat=coords[0], lng=coords[1])
 
-@app.route('/cam/<lat>&<lng>&<name>')
-def show_cam_page(lat, lng, name): 
+@app.route('/cam/<lat>&<lng>')
+def show_cam_page(lat, lng): 
     coords = [lat, lng]
+    
     decoder = getWebcam(coords)
     titles = getTitle(decoder)
     if not titles:
@@ -139,11 +139,53 @@ def travel_search(lat, lng):
 
 @app.route('/travel/results')
 def show_travel_page(lat, lng, adults, rooms, date, nights, minPrice, maxPrice):
-    hotel = hotel_search(lat, lng, adults, rooms, date, nights, minPrice, maxPrice)
-    hotel['name']
-    return render_template ('hotels.html', hotels = hotel)
+    hotels = hotel_search(lat, lng, adults, rooms, date, nights, minPrice,
+                          maxPrice)
+    if hotels is None:
+        return '<p>No results found</p>'
+    for hotel in hotels:
+      print(hotel['Image'])
+#     hotelName = []
+#     hotelAdd = []
+#     hotelAvail = []
+#     hotelPrice = []
+#     hotelLink = []
+#     for hotel in hotels:
+#         for key, value in hotel.items():
+#             if key == 'Name':
+#                 hotelName.append(value)
+#             if key == 'Address':
+#                 hotelAdd.append(value)
+#             if key == 'Availability':
+#                 hotelAvail.append(value)
+#             if key == 'Offer Price':
+#                 hotelPrice.append(value)
+#             if key == 'Offer Link':
+#                 hotelLink.append(value)
+    return render_template ('hotels.html', hotels=hotels)
+#                             address=hotelAdd,
+#                             availability=hotelAvail, =hotelPrice, d=hotelLink)
 
-    
+
+@app.route('/flights/search/<lat>&<lng>', methods=['GET', 'POST'])
+def flights_search(lat, lng):
+    search = FlightSearchForm()
+    if search.validate_on_submit():
+#           if request.method == 'POST':
+        print(search.data)
+        return show_flights_page(lat, lng, search.depart.data,
+                                 search.adults.data, search.date.data)
+
+    return render_template('travel_flights.html', form=search)
+
+@app.route('/flights/results')
+def show_flights_page(lat, lng, depart, adults, date):
+    flights = flight_search(lat, lng, depart, adults, date)
+    departing = flights['Departing From']
+    arriving = flights['Arrival To']
+    url = flights['URL']
+    return render_template ('flights.html', depart=departing, arrival=arriving, link=url)
+
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))

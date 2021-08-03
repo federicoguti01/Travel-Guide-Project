@@ -1,2 +1,11 @@
 {% extends "layout.html" %}
 {% block content %}
+<p class="whitespace">
+<div class="content card">
+    <p> Departing from: {{ depart }} </p> <br/>
+    <br/> <p> Arrival To: {{ arrival }} </p> <br/>
+    <br/> <a href= "{{ link }}">Book Flight Here </a>  
+</div>
+
+
+{% endblock content %}

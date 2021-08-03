@@ -39,12 +39,30 @@ def reverseGeocode(lat, lng):
             elif 'street_number' in component['types']:
                 name += component['long_name'] + " "
             elif 'postal_code' in component['types']:
-                name += ' ' + component['long_name']
-            elif
+                name += ' ' + str(component['long_name'])
+            elif 'administrative_area_level_2' in component['types'] or \
+            'postal_code_suffix' in component['types']:
+                pass
             else:
                 name += component['short_name'] + ", "
 
         return name
+
+    return None
+  
+def reverseGeoCity(lat, lng):
+    GEO_URL = ('https://maps.googleapis.com/maps/api/geocode/json?'
+          f'latlng={lat},{lng}&key={GEO_KEY}')
+    decoder = requests.get(GEO_URL)
+    dJSON = decoder.json()
+    
+    if dJSON['status'] == 'OK':
+
+        address = dJSON['results'][0]['address_components']
+        #         print(dJSON)
+        for component in address:
+            if 'locality' in component['types']:
+                return component['long_name']
 
     return None
 
@@ -62,8 +80,12 @@ def getGeocode(location):
         for component in address:
             if 'locality' in component['types']:
                 name += component['long_name'] + ", "
+        
+        for component in address:
             if 'administrative_area_level_1' in component['types']:
                 name += component['long_name'] + ", "
+                
+        for component in address:
             if 'country' in component['types']:
                 name += component['long_name']
 

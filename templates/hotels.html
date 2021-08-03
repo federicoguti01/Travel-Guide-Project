@@ -1,87 +1,62 @@
 {% extends "layout.html" %}
 {% block content %}
 
-{% for hotel in hotels %}
-  <h1 {{ hotel }}> </h1>
+<!-- {% for hotel in hotels %}
+  <h1> {{ hotel }} </h1>
 {% endfor %}
 
-<!-- 
-<html>
-<head>
-	<title>Python Flask Simple Shopping Cart</title>
-</head>
-<body>
-	<div>
-		{% with messages = get_flashed_messages() %}
-		  {% if messages %}
-			<ul class=flashes>
-			{% for message in messages %}
-			  <li>{{ message }}</li>
-			{% endfor %}
-			</ul>
-		  {% endif %}
-		{% endwith %}
-	</div>
+{% for hotel in a %}
+  <h1> {{ hotel }} </h1>
+{% endfor %}
+
+{% for hotel in b %}
+  <h1> {{ hotel }} </h1>
+{% endfor %}
+
+{% for hotel in c %}
+  <h1> {{ hotel }} </h1>
+{% endfor %}
+
+{% for hotel in d %}
+  <h1> {{ hotel }} </h1>
+{% endfor %} -->
 
 <div id="hotel-grid">
-  <div class="txt-heading">Hotel Bookings</div>
+  <div class="txt-heading"><h1>Hotel Options</h1></div>
 
+    {% for hotel in hotels %}
+    
     <div class="hotel-hotel">
       <form method="post" action="/add">
         <div class="hotel-tile-footer">
-
-          <div class="hotel-title">{{ item['name'] }}</div>
+          
+          <div class="hotel-title"><h2>{{ hotel['Name'] }}</h2></div>
                       <div class="row">
                           <div class="column">
-                              <div class="hotel-image"><img src="{{ item['pic'] }}" style=max-width:400px;max-height:400px;></div>
-                              <div class="hotel-name"><b>{{ item['startDate'] }}</b></div>
-                              <div class="hotel-address">Regular Price: <b>${{ item['price'] }}</b></div>
-                              <div class="hotel-availibilty">Sale Price: <b>${{ item['salePrice'] }}</b></div>
-                              <div class="hotel-rating">Rating: <b>{{ item['rating'] }}</b></div>
-                              <div class="hotel-addToCart"><b><a href="{{ item['addToCart'] }}">Add To Cart</a></b></div>
+                              <div class="hotel-image"><img src="{{ hotel['Image'] }}" style=max-width:400px;max-height:400px;></div>
+<!--                               <div class="hotel-name"><b></b></div> -->
+                              {% if hotel['Tier'] != 0 %}
+                                  <div class="hotel-stars"><b>{{ hotel['Tier'] }} stars</b></div>
+                              {% endif %}
+                              <div class="hotel-address"><b>Address:</b> {{ hotel['Address'] }}</div>
+                              <div class="hotel-availabilty"><b>Availability:</b> {{ hotel['Availability'] }}</div>
+                              <div class="hotel-rating"><b>Rating:</b> {{ hotel['Rating'] }}</div>
+                              <div class="hotel-price"><b>Price Range ($USD/night):</b> {{ hotel['Price'] }}</div>
+                              <div class="hotel-cancel"><b>Cancellation Policy:</b> {{ hotel['Cancellation Policy'] }}</div>
+                              <div class="hotel-offer"><b>Offer:</b> {{ hotel['Offer Price'] }}</div>
+                              {% if hotel['Offer Price'] != "No offers currently available" %}
+                                  <div class="hotel-link"><b><a href="{{ hotel['Offer Link'] }}">Book This Deal</a></b></div>
+                              {% endif %}
                           </div>
-                          <div class="column">
-                              <div class="item-description">{{ item['description'] }}</div>
-                          </div>
+<!--                           <div class="column">
+                              <div class="item-description"></div>
+                          </div> -->
                       </div>
         </div>
       </form>
     </div>
-            
-<hr>
-        
-<!--         Alternatives -->
-        
-<div class="txt-heading">Alternative Products</div>
-
-<div class="wrapper">
-
-{% for alt in alternatives.values() %}
-
-<div class="alt-item">
-<form method="post" action="/add">
-  <div class="alt-image"><img src="{{ alt['pic'] }}" style=max-width:325px;max-height:325px;></div>
-  <div class="alt-tile-footer">
-    <div class="alt-title">{{ alt['name'] }}</div>
-                <div class="alt-price">${{ alt['price'] }}</div>
-                <div class="row">
-                    <div class="column">
-                        <div class="alt-view"><a href="/item/{{ alt['sku'] }}">View</a></div>
-                    </div>
-                    <div class="column">
-                        <div class="alt-cart"><a href="{{ alt['addToCartUrl'] }}">Add To Cart</a></div>
-                    </div>
-                </div>
-  </div>
-</form>
-</div>
+    <hr>
+    {% endfor %}
 
 
-{% endfor %}
-
-</div>
-	
-	</div>
-</body>
-</html> -->
 {% endblock content %}

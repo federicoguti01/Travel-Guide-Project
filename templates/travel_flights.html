@@ -1,0 +1,56 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="content center">
+    <form method="POST" action="">
+        {{ form.hidden_tag() }}
+        <fieldset class="form-group">
+
+<div class="form-group">
+{{ form.depart.label(class="form-control-label") }}
+{% if form.depart.errors %}
+ {{ form.depart(class="form-control form-control-lg is-invalid") }}
+ <div class="invalid-feedback">
+   {% for error in form.depart.errors%}
+       <span>{{error}}</span>
+   {% endfor %}
+ </div>
+{% else %}
+ {{ form.depart(class="form-control form-control-lg") }}
+{% endif %}
+</div>
+          
+ <div class="form-group">
+ {{ form.adults.label(class="form-control-label") }}
+ {% if form.adults.errors %}
+   {{ form.adults(class="form-control form-control-lg is-invalid") }}
+   <div class="invalid-feedback">
+     {% for error in form.adults.errors%}
+         <span>{{error}}</span>
+     {% endfor %}
+   </div>
+{% else %}
+   {{ form.adults(class="form-control form-control-lg") }}
+{% endif %}
+</div>
+          
+<div class="form-group">
+{{ form.date.label(class="form-control-label") }}
+{% if form.date.errors %}
+ {{ form.date(class="form-control form-control-lg is-invalid") }}
+ <div class="invalid-feedback">
+   {% for error in form.date.errors%}
+       <span>{{error}}</span>
+   {% endfor %}
+ </div>
+{% else %}
+ {{ form.date(class="form-control form-control-lg") }}
+{% endif %}
+</div>
+          
+</fieldset>
+    <div class="form-group">
+       {{ form.submit(class="btn btn-outline-info") }}
+    </div>
+   </form>
+</div>
+{% endblock content %}
