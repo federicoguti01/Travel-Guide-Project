@@ -6,7 +6,7 @@ from geocoding import reverseGeoCity
 
 headers = {
     'content-type': "application/json",
-    'x-rapidapi-key': "835ea1863cmsh8ec245f12ad64bap187695jsn701aabefa0f1",
+    'x-rapidapi-key': "dddd636890msh920b10a66955182p15fca4jsnabf596755ddd",
     'x-rapidapi-host': "travel-advisor.p.rapidapi.com"
 }
 
@@ -188,6 +188,7 @@ def flight_search(lat, lang, depart, adults, date):
         return parse_flights_search(response.json())
     except BaseException:
         print("Invalid Response")
+    print(response.json)
     return parse_flights_search(response.json(), arrival_airport_address, depart_airport_address)
 
 
@@ -265,8 +266,7 @@ def parse_attraction_details(file_name):
 
 
 if __name__ == '__main__':
-    pass
     #print(travel_search("France"))
     #print(hotel_search(51.51924, -0.096654, 4, 2, "2021-10-11", 3, 100, 300))
     # print(attractions_search("Berlin"))
-    #print(flight_search())
+    flight_search(51.51924, -0.096654, "Dallas", 3, "2021-12-25")

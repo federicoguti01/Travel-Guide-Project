@@ -3,11 +3,10 @@ Add descriptions/images
 Create practice/presentation
 Add/fix html and css
 Add about/home pages
-Fix login page
 Testing/Unittest
 Heroku Deployment
 Back Buttons
-No results found
+Add Date Choice
 '''
 
 from flask import Flask, render_template, url_for, flash, redirect, request
@@ -169,8 +168,6 @@ def show_travel_page(lat, lng, adults, rooms, date,
                           maxPrice)
     if hotels is None:
         return '<p>No results found</p>'
-    for hotel in hotels:
-        print(hotel['Image'])
     return render_template('hotels.html', hotels=hotels)
 
 

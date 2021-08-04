@@ -22,10 +22,9 @@
 {% endfor %} -->
 
 <div id="hotel-grid">
-  <div class="txt-heading"><h1>Hotel Options</h1></div>
 
     {% for hotel in hotels %}
-    
+    <div class="txt-heading"><h1>Hotel Options</h1></div>
     <div class="hotel-hotel">
       <form method="post" action="/add">
         <div class="hotel-tile-footer">
@@ -55,7 +54,7 @@
 <hr>
 {% else %}
     <div class="content center">
-    <h1 class="border-bottom" style="font-size: 50px; padding-top: 25px; padding-bottom: 10px">>Sorry, no hotels were found.</h1>
+    <h1 class="border-bottom" style="font-size: 50px; padding-top: 25px; padding-bottom: 10px">Sorry, no hotels were found.</h1>
     <div style = "padding: 20px">
     <p>Check spelling of your keywords.</p>
     <p>Broaden search by adjusting minimum and maxium price.</p>
