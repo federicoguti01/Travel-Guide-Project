@@ -1,6 +1,13 @@
 {% extends "layout.html" %}
 {% block content %}
     <p class="whitespace">
+    <button onclick="goBack()">Go Back</button>
+
+    <script>
+    function goBack() {
+      window.history.back();
+    }
+    </script>
     <h2>Covid Risk Level for {{ country }}: {{ risk }}</h2>
     <hr>
     <h3>Charts</h3>

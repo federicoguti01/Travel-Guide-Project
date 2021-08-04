@@ -1,5 +1,15 @@
 {% extends "layout.html" %}
 {% block content %}
+
+<button onclick="location.href='/search'">Try another location</button>
+<button onclick="goBack()">Go Back</button>
+
+    <script>
+    function goBack() {
+      window.history.back();
+    }
+    </script>
+<button onclick="location.href='/results/{{ lat }}&{{ lng }}'">Go Back</button>
     <div class="content center">
     <h1 class="border-bottom" style="font-size: 50px; padding-top: 25px; padding-bottom: 10px">Sorry, no results were found.</h1>
     <div style = "padding: 20px;">

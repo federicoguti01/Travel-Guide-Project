@@ -1,5 +1,7 @@
 {% extends "layout.html" %}
 {% block content %}
+<p class="whitespace">
+<button onclick="goBack()">Go Back</button>
 <div class="content center">
     <form method="POST" action="">
         {{ form.hidden_tag() }}
@@ -32,13 +34,8 @@
    {{ form.adults(class="form-control form-control-lg") }}
 {% endif %}
 </div>
-
-<!-- <div class="form-group">
-<label>Enter your birthday:
-<input type="date" id="start" name="trip-start"
-       value="2018-07-22"
-       min="2018-01-01" max="2018-12-31">
           
+<div class="form-group">
 {{ form.date.label(class="form-control-label") }}
 {% if form.date.errors %}
  {{ form.date(class="form-control form-control-lg is-invalid") }}
@@ -50,7 +47,12 @@
 {% else %}
  {{ form.date(class="form-control form-control-lg") }}
 {% endif %}
-</div> -->
+</div>
+  
+<!--      
+<input type="date" id="start" name="trip-start"
+       min="2021-08-04" max="2023-12-31">  -->
+ 
           
 </fieldset>
     <div class="form-group">

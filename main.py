@@ -1,22 +1,21 @@
 '''
-Add descriptions/images
 Create practice/presentation
 Add/fix html and css
 Add about/home pages
 Testing/Unittest
 Heroku Deployment
-Back Buttons
-Add Date Choice
 '''
 
 from flask import Flask, render_template, url_for, flash, redirect, request
-from forms import RegistrationForm, LoginForm, LocationSearchForm, HotelSearchForm, FlightSearchForm
+from forms import RegistrationForm, LoginForm, LocationSearchForm
+from forms import HotelSearchForm, FlightSearchForm
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager, UserMixin, login_user, login_required
 from flask_login import logout_user, current_user
 from flask_behind_proxy import FlaskBehindProxy
 from geocoding import getGeocode, getManyIATA, reverseGeocode, reverseGeoCity
+from geocoding import reverseGeoCityCountry
 from restrictions import getRestrictions, getAdvisoryDF, getEntryExitDF
 from restrictions import getChartUrl, getRiskLevel, getCountryName
 from webcam import getWebcam, getWebLink, getTitle, getImage
@@ -60,14 +59,15 @@ def register():
     form = RegistrationForm()
     if form.validate_on_submit():  # checks if entries are valid
         user = User(username=form.username.data, email=form.email.data,
-                    password=bcrypt.generate_password_hash(form.password.data).decode('utf-8'))
+                    password=bcrypt.generate_password_hash(form.password.data)
+                    .decode('utf-8'))
         try:
             db.session.add(user)
             db.session.commit()
         except exc.IntegrityError:
             flash(
-                'User not created: Username or email associated with existing account',
-                'error')
+                'User not created: Username or email associated' +
+                'with existing account', 'error')
         else:
             flash(f'Account created for {form.username.data}!', 'success')
         finally:
@@ -103,21 +103,17 @@ def search():
         coords = getGeocode(search.data['search'])
         if coords is None:
             return render_template('error.html')
-        return search_results(coords)
+        return redirect(url_for('search_results', lat=coords[0],
+                                lng=coords[1]))
 
     return render_template('search.html', form=search)
 
 
 @app.route('/results/<lat>&<lng>')
-def search_results(coords):
-    # if search is None:
-    #     return '<div class="content" style="font-size: 20px; text-align: center;" <h1>No results found</h1> </div>'
-    #     location = reverseGeoCity(coords[0],coords[1])
-    #     travel = travel_search(location)
-    #     description = travel['Description']
-#     print(location)
+def search_results(lat, lng):
+    name = reverseGeoCityCountry(lat, lng)
     return render_template(
-        'results.html', name=coords[2], lat=coords[0], lng=coords[1])
+        'results.html', name=name, lat=lat, lng=lng)
 
 
 @app.route('/cam/<lat>&<lng>')
@@ -126,7 +122,8 @@ def show_cam_page(lat, lng):
     decoder = getWebcam(coords)
     titles = getTitle(decoder)
     image = getImage(decoder)
-    return render_template('cam.html', title=titles, cams=getWebLink(decoder), images=image)
+    return render_template('cam.html', title=titles, cams=getWebLink(decoder),
+                           images=image)
 
 
 @app.route('/restrictions/<lat>&<lng>')
@@ -154,9 +151,9 @@ def travel_search(lat, lng):
         #           if request.method == 'POST':
         print(search.data)
         return show_travel_page(lat, lng, search.adults.data,
-                                search.rooms.data, search.date.data,
-                                search.nights.data, search.minPrice.data,
-                                search.maxPrice.data)
+                                search.rooms.data, search.date.data
+                                .strftime('%Y-%m-%d'), search.nights.data,
+                                search.minPrice.data, search.maxPrice.data)
 
     return render_template('travel.html', form=search)
 
@@ -167,19 +164,17 @@ def show_travel_page(lat, lng, adults, rooms, date,
     hotels = hotel_search(lat, lng, adults, rooms, date, nights, minPrice,
                           maxPrice)
     if hotels is None:
-        return '<p>No results found</p>'
-    return render_template('hotels.html', hotels=hotels)
+        return render_template('error.html')
+    return render_template('hotels.html', hotels=hotels, lat=lat, lng=lng)
 
 
 @app.route('/flights/search/<lat>&<lng>', methods=['GET', 'POST'])
 def flights_search(lat, lng):
     search = FlightSearchForm()
     if search.validate_on_submit():
-        #           if request.method == 'POST':
-        print(search.data)
         return show_flights_page(lat, lng, search.depart.data,
-                                 search.adults.data, search.date.data)
-
+                                 search.adults.data, search.date.data
+                                 .strftime('%Y-%m-%d'))
     return render_template('travel_flights.html', form=search)
 
 
@@ -192,7 +187,8 @@ def show_flights_page(lat, lng, depart, adults, date):
     if flights is None:
         return render_template('error.html')
     return render_template(
-        'flights.html', depart=departing, arrival=arriving, link=url)
+        'flights.html', depart=departing, arrival=arriving, link=url,
+        lat=lat, lng=lng)
 
 
 @login_manager.user_loader

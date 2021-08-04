@@ -3,13 +3,7 @@ from geocoding import getGeocode
 from geocoding import getManyIATA
 from geocoding import reverseGeocode
 from geocoding import reverseGeoCity
-
-headers = {
-    'content-type': "application/json",
-    'x-rapidapi-key': "dddd636890msh920b10a66955182p15fca4jsnabf596755ddd",
-    'x-rapidapi-host': "travel-advisor.p.rapidapi.com"
-}
-
+from config import headers
 
 global min_price
 global max_price

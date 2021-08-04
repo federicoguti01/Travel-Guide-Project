@@ -69,6 +69,34 @@ def reverseGeoCity(lat, lng):
     return None
 
 
+def reverseGeoCityCountry(lat, lng):
+    GEO_URL = ('https://maps.googleapis.com/maps/api/geocode/json?'
+               f'latlng={lat},{lng}&key={GEO_KEY}')
+    decoder = requests.get(GEO_URL)
+    dJSON = decoder.json()
+
+    if dJSON['status'] == 'OK':
+
+        address = dJSON['results'][0]['address_components']
+        name = ''
+
+        for component in address:
+            if 'locality' in component['types']:
+                name += component['long_name'] + ", "
+
+        for component in address:
+            if 'administrative_area_level_1' in component['types']:
+                name += component['long_name'] + ", "
+
+        for component in address:
+            if 'country' in component['types']:
+                name += component['long_name']
+
+        return name
+
+    return None
+
+
 def getGeocode(location):
     GEO_URL = ('https://maps.googleapis.com/maps/api/geocode/json?'
                f'address={location}&key={GEO_KEY}')
@@ -79,7 +107,7 @@ def getGeocode(location):
 
         address = dJSON['results'][0]['address_components']
         name = ''
-#         print(dJSON)
+
         for component in address:
             if 'locality' in component['types']:
                 name += component['long_name'] + ", "
@@ -127,7 +155,7 @@ def main():
     print('Bad IATA >:( ->', getIATA(coords))
     print('Good IATA ->', getManyIATA(coords))
 
-    print("Reverse geocode:", reverseGeocode(coords[0], coords[1]))
+    print("Reverse geocode:", reverseGeoCityCountry(coords[0], coords[1]))
 
 
 if __name__ == "__main__":

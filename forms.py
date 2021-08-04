@@ -1,7 +1,11 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, BooleanField
-from wtforms import IntegerField, DateField
+from wtforms.fields.html5 import DateField
+from wtforms_components import DateRange
+from wtforms import IntegerField
 from wtforms.validators import DataRequired, Length, Email, EqualTo
+from datetime import date, timedelta
+
 
 
 class LoginForm(FlaskForm):
@@ -35,9 +39,8 @@ class HotelSearchForm(FlaskForm):
                           validators=[DataRequired()])
     rooms = IntegerField('How many rooms would you like??',
                          validators=[DataRequired()])
-    date = StringField('When would you like to check in? Please enter in the ' +
-                       'following format: YYYY-MM-DD',
-                       validators=[DataRequired()])
+    date = DateField('When would you like to check in?',
+                       validators=[DataRequired(), DateRange(min=date.today() + timedelta(days=1))], format='%Y-%m-%d')
     nights = IntegerField('How many nights would you like to stay?',
                           validators=[DataRequired()])
     minPrice = IntegerField('Please enter your minimum price per night',
@@ -52,7 +55,6 @@ class FlightSearchForm(FlaskForm):
                          validators=[DataRequired()])
     adults = IntegerField('How many adults will be traveling?',
                           validators=[DataRequired()])
-    date = StringField('When would you like to depart? Please enter in the ' +
-                       'following format: YYYY-MM-DD',
-                       validators=[DataRequired()])
+    date = DateField('When would you like to depart?', 
+                     validators=[DataRequired(), DateRange(min=date.today() + timedelta(days=1))], format='%Y-%m-%d')
     submit = SubmitField('Search')

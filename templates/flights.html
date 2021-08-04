@@ -1,6 +1,10 @@
 {% extends "layout.html" %}
 {% block content %}
 <p class="whitespace">
+<button onclick="goBack()">Edit your search</button>
+<button onclick="location.href='/results/{{ lat }}&{{ lng }}'">Go Back</button>
+
+<p class="whitespace">
 <div class="content card">
     <p> Departing from: {{ depart }} </p> <br/>
     <br/> <p> Arrival To: {{ arrival }} </p> <br/>

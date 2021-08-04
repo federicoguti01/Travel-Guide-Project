@@ -2,7 +2,13 @@
 {% block content %}
 
 <p class="whitespace">
-<input type="button" value="Go Back!" onclick="/results/{{ lat }}&{{ lng }}&{{ name }}" />
+<button onclick="goBack()">Go Back</button>
+
+    <script>
+    function goBack() {
+      window.history.back();
+    }
+    </script>
 <div class="row">
 {% for cam in cams %}
     <div class="col-sm-6">

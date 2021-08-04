@@ -1,5 +1,7 @@
 {% extends "layout.html" %}
 {% block content %}
+<p class="whitespace">
+<button onclick="goBack()">Go Back</button>
 <div class="content center">
     <form method="POST" action="">
         {{ form.hidden_tag() }}
