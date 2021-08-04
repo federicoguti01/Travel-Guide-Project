@@ -13,3 +13,4 @@ pytest
 pycodestyle
 flask_bcrypt
 flask_login
+wtforms_components
