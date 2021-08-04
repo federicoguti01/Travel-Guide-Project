@@ -47,16 +47,19 @@
                               {% if hotel['Offer Price'] != "No offers currently available" %}
                                   <div class="hotel-link"><b><a href="{{ hotel['Offer Link'] }}">Book This Deal</a></b></div>
                               {% endif %}
-                          </div>
-<!--                           <div class="column">
-                              <div class="item-description"></div>
-                          </div> -->
                       </div>
-        </div>
-      </form>
+                  </div>
     </div>
-    <hr>
-    {% endfor %}
-
-
+  </form>
+</div>
+<hr>
+{% else %}
+    <div class="content center">
+    <h1 class="border-bottom" style="font-size: 50px; padding-top: 25px; padding-bottom: 10px">>Sorry, no hotels were found.</h1>
+    <div style = "padding: 20px">
+    <p>Check spelling of your keywords.</p>
+    <p>Broaden search by adjusting minimum and maxium price.</p>
+    </div>
+    </div>
+{% endfor %}
 {% endblock content %}

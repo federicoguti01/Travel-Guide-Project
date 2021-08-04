@@ -1,5 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, BooleanField, IntegerField, DateField
+from wtforms import StringField, PasswordField, SubmitField, BooleanField
+from wtforms import IntegerField, DateField
 from wtforms.validators import DataRequired, Length, Email, EqualTo
 
 
@@ -18,35 +19,40 @@ class RegistrationForm(FlaskForm):
                         validators=[DataRequired(), Email()])
     password = PasswordField('Password', validators=[DataRequired()])
     confirm_password = PasswordField('Confirm Password',
-                                     validators=[DataRequired(), EqualTo('password')])
+                                     validators=[DataRequired(),
+                                                 EqualTo('password')])
     submit = SubmitField('Register')
-    
+
+
 class LocationSearchForm(FlaskForm):
     search = StringField('Search for a location:',
                          validators=[DataRequired()])
     submit = SubmitField('Search')
-    
+
+
 class HotelSearchForm(FlaskForm):
     adults = IntegerField('How many adults will be staying?',
-                        validators=[DataRequired()])
+                          validators=[DataRequired()])
     rooms = IntegerField('How many rooms would you like??',
-                        validators=[DataRequired()])
-    date = StringField('When would you like to check in? Please enter in the following format: YYYY-MM-DD',
-                     validators=[DataRequired()])
+                         validators=[DataRequired()])
+    date = StringField('When would you like to check in? Please enter in the ' +
+                       'following format: YYYY-MM-DD',
+                       validators=[DataRequired()])
     nights = IntegerField('How many nights would you like to stay?',
                           validators=[DataRequired()])
     minPrice = IntegerField('Please enter your minimum price per night',
                             validators=[DataRequired()])
     maxPrice = IntegerField('Please enter your maximum price per night',
-														validators=[DataRequired()])
+                            validators=[DataRequired()])
     submit = SubmitField('Search')
+
 
 class FlightSearchForm(FlaskForm):
     depart = StringField('Where are you departing from?',
-                     validators=[DataRequired()])
+                         validators=[DataRequired()])
     adults = IntegerField('How many adults will be traveling?',
-                        validators=[DataRequired()])
-    date = StringField('When would you like to depart? Please enter in the following format: YYYY-MM-DD',
-                     validators=[DataRequired()])
+                          validators=[DataRequired()])
+    date = StringField('When would you like to depart? Please enter in the ' +
+                       'following format: YYYY-MM-DD',
+                       validators=[DataRequired()])
     submit = SubmitField('Search')
-  

@@ -17,8 +17,9 @@
 
 .content {
   padding:20px;
-  max-width: 500px;
+  max-width: 900px;
   margin: auto;
+  font-size: 20px;
 }
 
 body {
@@ -105,5 +106,6 @@ p.whitespace {
   margin: 0;
   padding:20px;
 }
+
 
 

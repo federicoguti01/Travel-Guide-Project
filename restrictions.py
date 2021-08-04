@@ -7,9 +7,9 @@ from config import AUTH_KEY
 def getRestrictions(destination):
 
     #     originCoords = getGeocode(origin)
-#     destCoords = getGeocode(destination)
+    #     destCoords = getGeocode(destination)
 
-#     originIATA = getIATA(originCoords)
+    #     originIATA = getIATA(originCoords)
     destIATA = getManyIATA(destination)
 
     URL = 'https://covid-api.thinklumo.com/data?airport='
@@ -35,26 +35,28 @@ def getAdvisoryDF(dJSON):
 
     return df[FIELDS]
 
+
 def getCountryName(dJSON):
     return dJSON['airport']['country_name']
+
 
 def getChartUrl(dJSON):
     if dJSON['covid_stats']['county_district'] is not None:
         return {
-          "county" : dJSON['covid_stats']['county_district']['chart_url'],
-          "state" : dJSON['covid_stats']['state_province']['chart_url'],
-          "country" : dJSON['covid_stats']['country']['chart_url']
+            "county": dJSON['covid_stats']['county_district']['chart_url'],
+            "state": dJSON['covid_stats']['state_province']['chart_url'],
+            "country": dJSON['covid_stats']['country']['chart_url']
         }
-    
+
     if dJSON['covid_stats']['state_province'] is not None:
         return {
-          "state" : dJSON['covid_stats']['state_province']['chart_url'],
-          "country" : dJSON['covid_stats']['country']['chart_url']
+            "state": dJSON['covid_stats']['state_province']['chart_url'],
+            "country": dJSON['covid_stats']['country']['chart_url']
         }
-    
+
     return {
-          "country" : dJSON['covid_stats']['country']['chart_url']
-        }
+        "country": dJSON['covid_stats']['country']['chart_url']
+    }
 
 
 def getRiskLevel(dJSON):

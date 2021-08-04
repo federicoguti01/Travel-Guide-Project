@@ -22,12 +22,13 @@ def getLufthansaAuth():
 
     return headers
 
+
 def reverseGeocode(lat, lng):
     GEO_URL = ('https://maps.googleapis.com/maps/api/geocode/json?'
-          f'latlng={lat},{lng}&key={GEO_KEY}')
+               f'latlng={lat},{lng}&key={GEO_KEY}')
     decoder = requests.get(GEO_URL)
     dJSON = decoder.json()
-    
+
     if dJSON['status'] == 'OK':
 
         address = dJSON['results'][0]['address_components']
@@ -41,7 +42,7 @@ def reverseGeocode(lat, lng):
             elif 'postal_code' in component['types']:
                 name += ' ' + str(component['long_name'])
             elif 'administrative_area_level_2' in component['types'] or \
-            'postal_code_suffix' in component['types']:
+                    'postal_code_suffix' in component['types']:
                 pass
             else:
                 name += component['short_name'] + ", "
@@ -49,13 +50,14 @@ def reverseGeocode(lat, lng):
         return name
 
     return None
-  
+
+
 def reverseGeoCity(lat, lng):
     GEO_URL = ('https://maps.googleapis.com/maps/api/geocode/json?'
-          f'latlng={lat},{lng}&key={GEO_KEY}')
+               f'latlng={lat},{lng}&key={GEO_KEY}')
     decoder = requests.get(GEO_URL)
     dJSON = decoder.json()
-    
+
     if dJSON['status'] == 'OK':
 
         address = dJSON['results'][0]['address_components']
@@ -66,12 +68,13 @@ def reverseGeoCity(lat, lng):
 
     return None
 
+
 def getGeocode(location):
     GEO_URL = ('https://maps.googleapis.com/maps/api/geocode/json?'
                f'address={location}&key={GEO_KEY}')
     decoder = requests.get(GEO_URL)
     dJSON = decoder.json()
-    
+
     if dJSON['status'] == 'OK':
 
         address = dJSON['results'][0]['address_components']
@@ -80,18 +83,18 @@ def getGeocode(location):
         for component in address:
             if 'locality' in component['types']:
                 name += component['long_name'] + ", "
-        
+
         for component in address:
             if 'administrative_area_level_1' in component['types']:
                 name += component['long_name'] + ", "
-                
+
         for component in address:
             if 'country' in component['types']:
                 name += component['long_name']
 
         geoloc = dJSON['results'][0]['geometry']['location']
         return [geoloc['lat'], geoloc['lng'], name]
-    
+
     return None
 
 
@@ -123,8 +126,8 @@ def main():
     print('Coordinates:', coords)
     print('Bad IATA >:( ->', getIATA(coords))
     print('Good IATA ->', getManyIATA(coords))
-    
-    print("Reverse geocode:", reverseGeocode(coords[0],coords[1]))
+
+    print("Reverse geocode:", reverseGeocode(coords[0], coords[1]))
 
 
 if __name__ == "__main__":
