@@ -1,9 +1,10 @@
 {% extends "layout.html" %}
 {% block content %}
-<p class="whitespace row">
-<button onclick="location.href='/search'">Try another location</button>
-<button onclick="goBack()">Go Back</button>
-</p>
+<p class=" row">
+<div class="whitespace">
+<button class="btn btn-outline-dark" onclick="location.href='/search'">Try another location</button>
+<button class="btn btn-outline-dark" onclick="goBack()">Go Back</button>
+</div>
     <script>
     function goBack() {
       window.history.back();

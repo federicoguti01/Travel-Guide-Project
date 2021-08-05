@@ -7,31 +7,34 @@
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
   <style>
-    body {
-/*         background-image: url("https://rojocangrejo.com/files/sites/192/2016/04/rioja-alavesa.jpg"); */
+/*     .home {
+        background-image: url("https://ak-d.tripcdn.com/images/1008sa11522vppplsB54F.png?proc=source%2Ftrip"); */
         background-repeat: no-repeat;
         background-attachment: fixed;
-        background-size: cover;
+        background-size: contain;
+        background-size: 50%;
         text-align: center;
         display:flex; flex-direction:column; justify-content:center;
-            
-    }
-  </style>
+        min-height:100vh; 
+    } */
+  </style> 
 </head>
+
+<div class="split right">
   <div class="topnav">
   <div class="topnav-right">
     <a href="/">Home</a>
-<!--     <a href="/register">Register</a>
-    <a href="/login">Log In</a> -->
     <a href="/about">About</a>
     <a href="/search">Search</a>
   </div>
   </div>
 
-<body>
+  <div class="centered">
   <div style="margin-bottom:0;">
-      <h1 class= "title display-1 centered">Travel Guide</h1>
+    <h1 class= "title display-1 centered">TBD<br>The Best Destination</h1>
   </div>
-</body>
-</html>
-    
+  </div>
+  </div>
+  
+<div class="split left home">
+   

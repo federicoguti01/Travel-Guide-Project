@@ -1,12 +1,13 @@
 {% extends "layout.html" %}
 {% block content %}
 <p class="whitespace">
-<button onclick="goBack()">Go Back</button>
+<button class="btn btn-outline-dark" onclick="goBack()">Go Back</button>
 <div class="content center">
     <form method="POST" action="">
         {{ form.hidden_tag() }}
         <fieldset class="form-group">
-
+<div class="txt-heading border-bottom"><h1><b>Flight Finder</b></h1></div>
+<p class="whitespace">
 <div class="row">
 <div class="form-group">
 {{ form.depart.label(class="form-control-label") }}
@@ -55,7 +56,7 @@
 </fieldset>
       <div class="row">
     <div class="form-group">
-       {{ form.submit(class="btn btn-outline-info") }}
+       {{ form.submit(class="btn btn-outline-dark") }}
     </div>
       </div>
    </form>

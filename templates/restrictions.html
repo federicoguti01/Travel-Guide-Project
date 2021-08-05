@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% block content %}
     <p class="whitespace">
-    <button onclick="goBack()">Go Back</button>
+    <button class="btn btn-outline-dark" onclick="goBack()">Go Back</button>
 
     <script>
     function goBack() {
@@ -16,12 +16,13 @@
            <img src="{{ chart }}" style="max-width:800px;max-height:800px; padding:10px">
     {% endfor %}
     <hr>
-    <h3>Table</h3>
+    <h3>COVID-19 Advisories and Restrictions</h3>
     {% for table in tables %}
                 {{ table|safe }}
+                <hr>
     {% else %}
     <div class="content center">
-    <h1 class="border-bottom" style="font-size: 50px; padding-top: 25px; padding-bottom: 10px">Sorry, no webcams were found.</h1>
+    <h1 class="border-bottom" style="font-size: 50px; padding-top: 25px; padding-bottom: 10px">Sorry, no covid info was found.</h1>
     <div style = "padding: 20px">
     <p>Check spelling of your keywords.</p>
     <p>Narrow search by using specific cities or states.</p>

@@ -31,23 +31,9 @@ def reverseGeocode(lat, lng):
 
     if dJSON['status'] == 'OK':
 
-        address = dJSON['results'][0]['address_components']
-        name = ''
-        #         print(dJSON)
-        for component in address:
-            if 'country' in component['types']:
-                name += component['long_name']
-            elif 'street_number' in component['types']:
-                name += component['long_name'] + " "
-            elif 'postal_code' in component['types']:
-                name += ' ' + str(component['long_name'])
-            elif 'administrative_area_level_2' in component['types'] or \
-                    'postal_code_suffix' in component['types']:
-                pass
-            else:
-                name += component['short_name'] + ", "
+        address = dJSON['results'][0]['formatted_address']
 
-        return name
+        return address
 
     return None
 
@@ -155,7 +141,7 @@ def main():
     print('Bad IATA >:( ->', getIATA(coords))
     print('Good IATA ->', getManyIATA(coords))
 
-    print("Reverse geocode:", reverseGeoCityCountry(coords[0], coords[1]))
+    print("Reverse geocode:", reverseGeocode(coords[0], coords[1]))
 
 
 if __name__ == "__main__":

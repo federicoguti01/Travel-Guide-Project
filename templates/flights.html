@@ -3,11 +3,13 @@
 <div class="whitespace">
 <p class="row">
 <div class="whitespace">
-<button onclick="goBack()">Edit your search</button>
-<button onclick="location.href='/results/{{ lat }}&{{ lng }}'">Go Back</button>
+<button class="btn btn-outline-dark" onclick="goBack()">Edit your search</button>
+<button class="btn btn-outline-dark" onclick="location.href='/results/{{ lat }}&{{ lng }}'">Go Back</button>
 </div>
-</p>
 
+
+<p class="whitespace">
+<div class="txt-heading border-bottom"><h1><b>Flight Options</b></h1></div>
 <p class="whitespace">
 <div>
     <p> Departing from: {{ depart }}: {{ address1 }} </p>

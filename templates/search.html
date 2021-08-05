@@ -5,16 +5,18 @@
 {{ form.hidden_tag() }}
 
 <p class="whitespace">
-<div class="centered2 content-section">
-<legend>Search for a destination</legend>
+<div class="centered2 content-section" style="max-width: 100%;">
+  <h1 class="txt-heading border-bottom"> <b>Welcome to the Destination Tracker!</b></h1>
+<h5 style="padding-top: 20px">Search for your favorite destinations using city, state, country, or attraction name. </h5>
 <fieldset class="form-group">
-<div class="form-group formPadding">
+<div class="form-group">
     {{ form.search(class="form-control form-control-lg") }}
 </div>
 </fieldset>
-<div class="form-group formPadding">
+<div class="form-group" style="width: 900px;">
 {{ form.submit(class="btn btn-outline-dark form-control form-control-lg") }}
 </div>
+
 </div>
 
 </form>

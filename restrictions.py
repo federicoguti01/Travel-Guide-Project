@@ -30,10 +30,18 @@ def getRestrictions(destination):
 
 def getAdvisoryDF(dJSON):
     df = pd.json_normalize(dJSON['travel_advisories'])
-
-    FIELDS = ["issued_by", "advisory", "url", "last_updated"]
-
-    return df[FIELDS]
+    
+    FIELDS = ["issued_by", "advisory", "url"]
+    df = df[FIELDS]
+    
+    df.columns = ['Issuing Body', 'Advisory Information', 'Source']
+    df['Source'] = df['Source']\
+            .str.replace(
+            '(.*)',
+            '<a href="\\1">Source</a>'
+        )
+    
+    return df
 
 
 def getCountryName(dJSON):
@@ -67,12 +75,23 @@ def getEntryExitDF(dJSON):
     df = pd.json_normalize(dJSON['covid_info']['entry_exit_info'])
 
     FIELDS = [
-        "source",
         "quarantine",
         "testing",
         "travel_restrictions",
-        "last_updated"]
+        "source",
+        "location_name"]
+    df = df[FIELDS]
 
+    df['source'] = df['source']\
+            .str.replace(
+            '(.*)',
+            '<a href="\\1">Source</a>'
+        )
+    
+
+    df.columns = ['Quarantine Requirements', 'Testing Requirements',
+                  'Travel Restrictions', 'Source', 'Issuing Location']
+    
     return df
 
 

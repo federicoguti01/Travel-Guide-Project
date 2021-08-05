@@ -1,22 +1,12 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField,
+from wtforms import StringField, PasswordField
 from wtforms import SubmitField, BooleanField  # , SelectField
 from wtforms.fields.html5 import DateField
 from wtforms_components import DateRange
 from wtforms import IntegerField
-from wtforms.validators import DataRequired, Length, Email, EqualTo, NumberRange
+from wtforms.validators import DataRequired, Length, Email
+from wtforms.validators import EqualTo, NumberRange
 from datetime import date, timedelta
-
-# def createList(r1, r2):
-#     if (r1 == r2):
-#         return str(r1)
-#     else:
-#         res = []
-#         while(r1 < r2+1 ):
-#             res.append(r1)
-#             r1 += 1
-#         return res
-
 
 class LoginForm(FlaskForm):
     username = StringField('Username',

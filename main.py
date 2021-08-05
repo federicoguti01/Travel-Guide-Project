@@ -1,8 +1,7 @@
 '''
 Create practice/presentation
-Add/fix html and css
-Add about/home pages
-Testing/Unittest
+Finish html/css
+Add description
 '''
 
 from flask import Flask, render_template, url_for, flash, redirect, request
@@ -30,7 +29,6 @@ login_manager.init_app(app)
 login_manager.login_view = 'login'
 
 bcrypt = Bcrypt(app)
-
 
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -134,10 +132,10 @@ def show_restrictions_page(lat, lng):
         tables=[
             getAdvisoryDF(covid_info).to_html(
                 header="true",
-                escape=False),
+                escape=False, index=False),
             getEntryExitDF(covid_info).to_html(
                 header="true",
-                escape=False)],
+                escape=False, index=False)],
         charts=getChartUrl(covid_info),
         country=getCountryName(covid_info),
         risk=getRiskLevel(covid_info))
@@ -180,9 +178,9 @@ def flights_search(lat, lng):
 @app.route('/flights/results')
 def show_flights_page(lat, lng, depart, adults, date):
     flights = flight_search(lat, lng, depart, adults, date)
-    arriving = flights['Departing From']
+    departing = flights['Departing From']
     arriveAdd = flights['Departing Airport Address']
-    departing = flights['Arrival To']
+    arriving = flights['Arrival To']
     departAdd = flights['Arrival Airport Address']
     print(flights)
     url = flights['URL']

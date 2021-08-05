@@ -192,7 +192,7 @@ def parse_flights_search(file_name, arrivalAirportAddress, departAirportAddress)
     results['Departing From'] = file_name['airports'][1]['n']
     results['Departing Airport Address'] = departAirportAddress
     results['Arrival To'] = file_name['airports'][0]['n']
-    results['Arrival Airport Address'] = arrivalAirportAddress 
+    results['Arrival Airport Address'] = arrivalAirportAddress
     print(results)
     return results
 

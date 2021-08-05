@@ -2,13 +2,15 @@
 {% block content %}
 
 <p class="whitespace">
-<button onclick="goBack()">Go Back</button>
+<button class="btn btn-outline-dark" onclick="goBack()">Go Back</button>
 
     <script>
     function goBack() {
       window.history.back();
     }
     </script>
+<div class="txt-heading border-bottom"><h1><b>Webcam Options</b></h1></div>
+<p class="whitespace">
 <div class="row">
 {% for cam in cams %}
     <div class="col-sm-6">
@@ -19,6 +21,7 @@
           <a href="{{ cam }}" class="btn btn-outline-dark">Webcam Link</a>
         </div>
       </div>
+      <p class="whitespace">
     </div>
 {% else %}
     <div class="content center">
