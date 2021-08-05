@@ -32,7 +32,8 @@ def getTitle(decoder):
     for webcam in webcams:
         x.append(webcam['title'])
     return x
-  
+
+
 def getImage(decoder):
     webcams = decoder['result']['webcams']
     x = []

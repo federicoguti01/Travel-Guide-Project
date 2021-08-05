@@ -1,13 +1,17 @@
 {% extends "layout.html" %}
 {% block content %}
-<p class="whitespace">
+<div class="whitespace">
+<p class="row">
+<div class="whitespace">
 <button onclick="goBack()">Edit your search</button>
 <button onclick="location.href='/results/{{ lat }}&{{ lng }}'">Go Back</button>
+</div>
+</p>
 
 <p class="whitespace">
-<div class="content card">
-    <p> Departing from: {{ depart }} </p> <br/>
-    <br/> <p> Arrival To: {{ arrival }} </p> <br/>
-    <br/> <a href= "{{ link }}">Book Flight Here </a>  
+<div>
+    <p> Departing from: {{ depart }}: {{ address1 }} </p>
+    <p> Arrival To: {{ arrival }}: {{ address2 }} </p>
+    <a href= "{{ link }}">Book Flight Here </a>
 </div>
 {% endblock content %}

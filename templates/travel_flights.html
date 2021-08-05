@@ -7,6 +7,7 @@
         {{ form.hidden_tag() }}
         <fieldset class="form-group">
 
+<div class="row">
 <div class="form-group">
 {{ form.depart.label(class="form-control-label") }}
 {% if form.depart.errors %}
@@ -20,8 +21,10 @@
  {{ form.depart(class="form-control form-control-lg") }}
 {% endif %}
 </div>
-          
- <div class="form-group">
+</div>
+
+<div class="row">
+ <div class="form-group formPadding">
  {{ form.adults.label(class="form-control-label") }}
  {% if form.adults.errors %}
    {{ form.adults(class="form-control form-control-lg is-invalid") }}
@@ -34,8 +37,8 @@
    {{ form.adults(class="form-control form-control-lg") }}
 {% endif %}
 </div>
-          
-<div class="form-group">
+    
+<div class="form-group formPadding">
 {{ form.date.label(class="form-control-label") }}
 {% if form.date.errors %}
  {{ form.date(class="form-control form-control-lg is-invalid") }}
@@ -48,16 +51,13 @@
  {{ form.date(class="form-control form-control-lg") }}
 {% endif %}
 </div>
-  
-<!--      
-<input type="date" id="start" name="trip-start"
-       min="2021-08-04" max="2023-12-31">  -->
- 
-          
+</div>        
 </fieldset>
+      <div class="row">
     <div class="form-group">
        {{ form.submit(class="btn btn-outline-info") }}
     </div>
+      </div>
    </form>
 </div>
 {% endblock content %}

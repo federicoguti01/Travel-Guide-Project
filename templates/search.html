@@ -1,18 +1,23 @@
 {% extends "layout.html" %}
 {% block content %}
-    <div class="content-section centered2">
-        <form method="POST" action="">
-            {{ form.hidden_tag() }}
-            <fieldset class="form-group">
-                <legend class="mb-4">Search for a destination</legend>
-                <div class="form-group">
-                    {{ form.search }}
-                </div>
-            </fieldset>
-        <div class="form-group">
-  {{ form.submit(class="btn btn-outline-info") }}
+
+<form method="POST" action="">
+{{ form.hidden_tag() }}
+
+<p class="whitespace">
+<div class="centered2 content-section">
+<legend>Search for a destination</legend>
+<fieldset class="form-group">
+<div class="form-group formPadding">
+    {{ form.search(class="form-control form-control-lg") }}
 </div>
-       
-	</form>
-    </div>
+</fieldset>
+<div class="form-group formPadding">
+{{ form.submit(class="btn btn-outline-dark form-control form-control-lg") }}
+</div>
+</div>
+
+</form>
+
+
 {% endblock content %}

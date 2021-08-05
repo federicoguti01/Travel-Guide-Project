@@ -1,29 +1,10 @@
 {% extends "layout.html" %}
 {% block content %}
-
-<!-- {% for hotel in hotels %}
-  <h1> {{ hotel }} </h1>
-{% endfor %}
-
-{% for hotel in a %}
-  <h1> {{ hotel }} </h1>
-{% endfor %}
-
-{% for hotel in b %}
-  <h1> {{ hotel }} </h1>
-{% endfor %}
-
-{% for hotel in c %}
-  <h1> {{ hotel }} </h1>
-{% endfor %}
-
-{% for hotel in d %}
-  <h1> {{ hotel }} </h1>
-{% endfor %} -->
-
+<p class="row">
 <p class="whitespace">
 <button onclick="goBack()">Edit your search</button>
 <button onclick="location.href='/results/{{ lat }}&{{ lng }}'">Go Back</button>
+</p>
 <div id="hotel-grid">
 <p class="whitespace">
 <div class="txt-heading"><h1><b>Hotel Options</b></h1></div>

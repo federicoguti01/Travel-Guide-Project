@@ -108,5 +108,15 @@ p.whitespace {
 
 }
 
+.formPadding {
+  padding-right: 10px;
+}
+
+.middle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+
 
 

@@ -41,7 +41,7 @@ def parse_travel_search(file_name):
     results['Latitude'] = file_name['data'][0]['result_object']['latitude']
     results['Longitude'] = file_name['data'][0]['result_object']['longitude']
     # try:
-    #results['Night Life'] = file_name['data'][0]['result_object']['category_counts']['attractions']['nightlife']
+    # results['Night Life'] = file_name['data'][0]['result_object']['category_counts']['attractions']['nightlife']
     # except BaseException:
     # pass
     results['Description'] = file_name['data'][0]['result_object']['geo_description']
@@ -167,7 +167,7 @@ def flight_search(lat, lang, depart, adults, date):
     arrival_airport_address = reverseGeocode(home_airport_coor[0], home_airport_coor[1])
     destination_name = reverseGeoCity(lat, lang)
     destination_airport_coor = getGeocode(destination_name)
-    destination_airpot_code = getManyIATA(destination_airport_coor)
+    destination_airpot_code = getManyIATA(destination_airport_coor) 
     depart_airport_address = reverseGeocode(lat, lang)
     url = "https://travel-advisor.p.rapidapi.com/flights/create-session"
     try:
@@ -261,6 +261,6 @@ def parse_attraction_details(file_name):
 
 if __name__ == '__main__':
     #print(travel_search("France"))
-    #print(hotel_search(51.51924, -0.096654, 4, 2, "2021-10-11", 3, 100, 300))
+#     print(hotel_search(51.51924, -0.096654, 4, 2, "2021-10-11", 3, 100, 300))
     # print(attractions_search("Berlin"))
     flight_search(51.51924, -0.096654, "Dallas", 3, "2021-12-25")

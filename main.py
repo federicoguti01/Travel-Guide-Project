@@ -3,7 +3,6 @@ Create practice/presentation
 Add/fix html and css
 Add about/home pages
 Testing/Unittest
-Heroku Deployment
 '''
 
 from flask import Flask, render_template, url_for, flash, redirect, request
@@ -151,8 +150,7 @@ def travel_search(lat, lng):
         #           if request.method == 'POST':
         print(search.data)
         return show_travel_page(lat, lng, search.adults.data,
-                                search.rooms.data, search.date.data
-                                .strftime('%Y-%m-%d'), search.nights.data,
+                                search.rooms.data, search.date.data, search.nights.data,
                                 search.minPrice.data, search.maxPrice.data)
 
     return render_template('travel.html', form=search)
@@ -163,7 +161,8 @@ def show_travel_page(lat, lng, adults, rooms, date,
                      nights, minPrice, maxPrice):
     hotels = hotel_search(lat, lng, adults, rooms, date, nights, minPrice,
                           maxPrice)
-    if hotels is None:
+    print(hotels)
+    if (hotels == "No hotels could be found for your search. Please try again.\n"):
         return render_template('error.html')
     return render_template('hotels.html', hotels=hotels, lat=lat, lng=lng)
 
@@ -181,14 +180,17 @@ def flights_search(lat, lng):
 @app.route('/flights/results')
 def show_flights_page(lat, lng, depart, adults, date):
     flights = flight_search(lat, lng, depart, adults, date)
-    departing = flights['Departing From']
-    arriving = flights['Arrival To']
+    arriving = flights['Departing From']
+    arriveAdd = flights['Departing Airport Address']
+    departing = flights['Arrival To']
+    departAdd = flights['Arrival Airport Address']
+    print(flights)
     url = flights['URL']
     if flights is None:
         return render_template('error.html')
     return render_template(
         'flights.html', depart=departing, arrival=arriving, link=url,
-        lat=lat, lng=lng)
+        lat=lat, lng=lng, address1=departAdd, address2=arriveAdd)
 
 
 @login_manager.user_loader

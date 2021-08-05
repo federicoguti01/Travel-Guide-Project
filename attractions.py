@@ -10,7 +10,8 @@ attractions = {
         'images': {
             'small': {
                 'width': '150',
-                'url': 'https://media-cdn.tripadvisor.com/media/photo-l/07/02/63/f5/freedom-tower.jpg',
+                'url': 
+                  'https://media-cdn.tripadvisor.com/media/photo-l/07/02/63/f5/freedom-tower.jpg',
                 'height': '150'
             },
             'thumbnail': {
