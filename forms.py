@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, BooleanField#, SelectField
+from wtforms import StringField, PasswordField, SubmitField, BooleanField  # , SelectField
 from wtforms.fields.html5 import DateField
 from wtforms_components import DateRange
 from wtforms import IntegerField
@@ -15,6 +15,7 @@ from datetime import date, timedelta
 #             res.append(r1)
 #             r1 += 1
 #         return res
+
 
 class LoginForm(FlaskForm):
     username = StringField('Username',
@@ -44,11 +45,11 @@ class LocationSearchForm(FlaskForm):
 
 class HotelSearchForm(FlaskForm):
     adults = IntegerField('How many adults will be staying?',
-                           validators=[DataRequired(), NumberRange(min=1, max=100)])
+                          validators=[DataRequired(), NumberRange(min=1, max=100)])
     rooms = IntegerField('How many rooms would you like?',
                          validators=[DataRequired(), NumberRange(min=1, max=100)])
     date = DateField('When would you like to check in?',
-                       validators=[DataRequired(), DateRange(min=date.today() + timedelta(days=1))], format='%Y-%m-%d')
+                    validators=[DataRequired(), DateRange(min=date.today() + timedelta(days=1))], format='%Y-%m-%d')
     nights = IntegerField('How many nights would you like to stay?',
                           validators=[DataRequired(), NumberRange(min=1, max=170)])
     minPrice = IntegerField('Minimum price (per night)',

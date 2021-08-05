@@ -129,7 +129,7 @@ def parse_hotel_search(file_name, min_price, max_price):
             # except KeyError:
             # using rating (rounded) instead of raw_ranking because some hotels
             # do not have a raw_ranking field
-                #results['Rating'] = file_name['data'][hotel]['rating']
+                # results['Rating'] = file_name['data'][hotel]['rating']
             except BaseException:
                 results['Rating'] = "No ratings are currently available"
 
@@ -260,7 +260,7 @@ def parse_attraction_details(file_name):
 
 
 if __name__ == '__main__':
-    #print(travel_search("France"))
-#     print(hotel_search(51.51924, -0.096654, 4, 2, "2021-10-11", 3, 100, 300))
+    # print(travel_search("France"))
+    # print(hotel_search(51.51924, -0.096654, 4, 2, "2021-10-11", 3, 100, 300))
     # print(attractions_search("Berlin"))
     flight_search(51.51924, -0.096654, "Dallas", 3, "2021-12-25")
