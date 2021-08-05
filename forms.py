@@ -49,7 +49,7 @@ class HotelSearchForm(FlaskForm):
     rooms = IntegerField('How many rooms would you like?',
                          validators=[DataRequired(), NumberRange(min=1, max=100)])
     date = DateField('When would you like to check in?',
-                    validators=[DataRequired(), DateRange(min=date.today() + timedelta(days=1))], format='%Y-%m-%d')
+                     validators=[DataRequired(), DateRange(min=date.today() + timedelta(days=1))], format='%Y-%m-%d')
     nights = IntegerField('How many nights would you like to stay?',
                           validators=[DataRequired(), NumberRange(min=1, max=170)])
     minPrice = IntegerField('Minimum price (per night)',
@@ -64,6 +64,6 @@ class FlightSearchForm(FlaskForm):
                          validators=[DataRequired()])
     adults = IntegerField('How many adults will be traveling?',
                           validators=[DataRequired(), NumberRange(min=1, max=100)])
-    date = DateField('When would you like to depart?', 
+    date = DateField('When would you like to depart?',
                      validators=[DataRequired(), DateRange(min=date.today() + timedelta(days=1))], format='%Y-%m-%d')
     submit = SubmitField('Search')
