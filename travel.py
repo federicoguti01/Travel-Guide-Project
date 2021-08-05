@@ -167,7 +167,7 @@ def flight_search(lat, lang, depart, adults, date):
     arrival_airport_address = reverseGeocode(home_airport_coor[0], home_airport_coor[1])
     destination_name = reverseGeoCity(lat, lang)
     destination_airport_coor = getGeocode(destination_name)
-    destination_airpot_code = getManyIATA(destination_airport_coor) 
+    destination_airpot_code = getManyIATA(destination_airport_coor)
     depart_airport_address = reverseGeocode(lat, lang)
     url = "https://travel-advisor.p.rapidapi.com/flights/create-session"
     try:
