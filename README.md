@@ -29,8 +29,11 @@ When clicking the 'Search' tab, users will be redirected to a location search pa
 
 ### External Information:
 
-
-[Click here for CarMD's API documentation](https://api.carmd.com/member/docs#vin-decode)
+- [Lufthansa API Documentation](https://developer.lufthansa.com/docs)
+- [Travel Advisor API Documentation](https://rapidapi.com/apidojo/api/travel-advisor/)
+- [Geocoding API](https://developers.google.com/maps/documentation/geocoding/overview)
+- [Windy Webcam API](https://api.windy.com/webcams/docs)
+- [COVID-19 Information API](https://covid-developer-docs.thinklumo.com/)
 
 
 ### Contact Information:
