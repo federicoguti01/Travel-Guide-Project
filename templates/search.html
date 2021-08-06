@@ -1,25 +1,20 @@
 {% extends "layout.html" %}
 {% block content %}
-
+<!-- <div class="home"> -->
 <form method="POST" action="">
 {{ form.hidden_tag() }}
-
-<p class="whitespace">
-<div class="centered2 content-section" style="max-width: 100%;">
-  <h1 class="txt-heading border-bottom"> <b>Welcome to the Destination Tracker!</b></h1>
+<h1 class=" font txt-heading border-bottom center" style="padding-top: 30px"> Welcome to the Destination Tracker!</h1>
+<div class=" font center content">
 <h5 style="padding-top: 20px">Search for your favorite destinations using city, state, country, or attraction name. </h5>
 <fieldset class="form-group">
 <div class="form-group">
     {{ form.search(class="form-control form-control-lg") }}
 </div>
 </fieldset>
-<div class="form-group" style="width: 900px;">
+<div style="width: 100px;">
 {{ form.submit(class="btn btn-outline-dark form-control form-control-lg") }}
 </div>
 
 </div>
-
 </form>
-
-
 {% endblock content %}

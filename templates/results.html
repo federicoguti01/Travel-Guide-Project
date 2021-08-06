@@ -6,8 +6,9 @@
   <button class="btn btn-outline-dark" onclick="goBack()">Search for a different location</button>
   <div class="row">
     <div class="col-sm-6">
-      <div class="card">
-        <img class="card-img-top" src="https://southernchronicles.icebreaker.com/wp-content/uploads/2018/02/G%C3%A1sadalur-Village.jpg">
+      <div class="card" >
+        <img class="card-img-top" src="https://confide-portal.codio.io/travel-guide/images/cityscape%20(2).png" alt="City Icon">
+        <div class="center" style="padding-top:2px; padding-bottom:20px">Icons made by <a href="https://www.flaticon.com/authors/eucalyp" title="Eucalyp">Eucalyp</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
         <div class="card-body">
           <h5 class="card-title">WebCam</h5>
           <p class="card-text">View webcams of nearby areas to gather a more accurate represention of the desired location.</p>
@@ -17,10 +18,11 @@
     </div>
     <div class="col-sm-6">
       <div class="card">
-        <img class="card-img-top" src="https://www.irishtimes.com/polopoly_fs/1.4416194.1606078101!/image/image.jpg_gen/derivatives/ratio_1x1_w1200/image.jpg">
+        <img class="card-img-top" src="https://confide-portal.codio.io/travel-guide/images/covid-19.png" alt="COVID Icon">
+        <div class="center" style="padding-top:5px">Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
         <div class="card-body">
           <h5 class="card-title">Covid Restrictions</h5>
-          <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+          <p class="card-text">Check to see if there are any COVID related adviosries or restrictions placed by your government and the amount of COVID cases in this area from the past year.</p>
           <a href="/restrictions/{{ lat }}&{{ lng }}" class="btn btn-outline-dark">View Covid Restrictions</a>
         </div>
       </div>
@@ -31,20 +33,22 @@
   <div class="row">
     <div class="col-sm-6">
       <div class="card">
-        <img class="card-img-top" src="https://image.winudf.com/v2/image1/Y29tLmFwcDNkd2FsbHBhcGVyaGQuaG90ZWx3YWxscGFwZXJfc2NyZWVuXzBfMTU2NzAyNTUzNV8wNDE/screen-0.jpg?fakeurl=1&type=.jpg">
+        <img class="card-img-top" src="https://confide-portal.codio.io/travel-guide/images/hotel.png" alt="Hotel Icon">
+        <div class="center">Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
         <div class="card-body">
           <h5 class="card-title">Hotels</h5>
-          <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+          <p class="card-text"> Check out the different hotels in the area based on the criteria you select.</p>
           <a href="/travel/search/{{ lat }}&{{ lng }}" class="btn btn-outline-dark">View Hotels</a>
         </div>
       </div>
     </div>
     <div class="col-sm-6">
       <div class="card">
-        <img class="card-img-top" src="https://static.toiimg.com/photo/79283869/flight.jpg?width=748&resize=4">
+        <img class="card-img-top" img src="https://confide-portal.codio.io/travel-guide/images/airport.png" alt="Airport Icon"/>
+        <div class="center">Icons made by <a href="https://www.flaticon.com/authors/eucalyp">Eucalyp</a> from <a href="https://www.flaticon.com/">www.flaticon.com</a></div>
         <div class="card-body">
           <h5 class="card-title">Flights</h5>
-          <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+          <p class="card-text">Get a link to different flights available based on the airport nearest to you and your destination and other criteria.</p>
           <a href="/flights/search/{{ lat }}&{{ lng }}" class="btn btn-outline-dark">View Flights</a>
         </div>
       </div>

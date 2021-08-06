@@ -43,12 +43,16 @@ class User(UserMixin, db.Model):
 @app.route("/")
 @app.route("/home")
 def home():
-    return render_template('home.html')
+    return render_template('about.html')
 
 
 @app.route("/about")
 def about():
     return render_template('about.html')
+
+#@app.route("/meet-the-team")
+#def meet_the_team():
+#  return render_template('meet_the_team.html')
 
 
 @app.route("/register", methods=['GET', 'POST'])
@@ -178,16 +182,18 @@ def flights_search(lat, lng):
 @app.route('/flights/results')
 def show_flights_page(lat, lng, depart, adults, date):
     flights = flight_search(lat, lng, depart, adults, date)
+    if (flights == "Airports are the same"):
+        return render_template('error.html')
+    if flights is None:
+        return render_template('error.html')
     departing = flights['Departing From']
     arriveAdd = flights['Departing Airport Address']
     arriving = flights['Arrival To']
     departAdd = flights['Arrival Airport Address']
     print(flights)
     url = flights['URL']
-    if flights is None:
-        return render_template('error.html')
     return render_template(
-        'flights.html', depart=departing, arrival=arriving, link=url,
+        'flights.html', depart=arriving, arrival=departing, link=url,
         lat=lat, lng=lng, address1=departAdd, address2=arriveAdd)
 
 

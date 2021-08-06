@@ -90,7 +90,7 @@ def getEntryExitDF(dJSON):
     
 
     df.columns = ['Quarantine Requirements', 'Testing Requirements',
-                  'Travel Restrictions', 'Source', 'Issuing Location']
+                  'Travel Restrictions', 'Source', 'Scope']
     
     return df
 

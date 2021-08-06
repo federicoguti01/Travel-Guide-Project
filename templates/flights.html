@@ -12,8 +12,11 @@
 <div class="txt-heading border-bottom"><h1><b>Flight Options</b></h1></div>
 <p class="whitespace">
 <div>
-    <p> Departing from: {{ depart }}: {{ address1 }} </p>
-    <p> Arrival To: {{ arrival }}: {{ address2 }} </p>
-    <a href= "{{ link }}">Book Flight Here </a>
+  <ul>
+    <li>Departing from: {{ depart }}: {{ address1 }} </li>
+    <li>Arrival To: {{ arrival }}: {{ address2 }}</li>
+    <li><a href= "{{ link }}">Book Flight Here </a></li>
+  </ul>
+  
 </div>
 {% endblock content %}

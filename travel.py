@@ -152,22 +152,14 @@ def parse_hotel_search(file_name, min_price, max_price):
 
 
 def flight_search(lat, lang, depart, adults, date):
-    # my_var = travel_search()
-    # destination_name = my_var['Name']
-    # home_input = input("Please enter the location to which you are departing from: \n")
-    # departure_date = input("When would you like to depart? Please enter in the following format: YYYY-MM-DD\n")
-    # num_adults = input("How many adults will be traveling?: \n")
-    # try:
-    #     val = int(num_adults)
-    # except ValueError:
-    #     num_adults = 1
-    #    print("That's not a number, we will assume one adult is traveling")
     home_airport_coor = getGeocode(depart)
     home_airport_code = getManyIATA(home_airport_coor)
     arrival_airport_address = reverseGeocode(home_airport_coor[0], home_airport_coor[1])
     destination_name = reverseGeoCity(lat, lang)
     destination_airport_coor = getGeocode(destination_name)
     destination_airpot_code = getManyIATA(destination_airport_coor)
+    if destination_airpot_code[0] == home_airport_code[0]:
+      return ("Airports are the same")
     depart_airport_address = reverseGeocode(lat, lang)
     url = "https://travel-advisor.p.rapidapi.com/flights/create-session"
     try:
@@ -182,7 +174,7 @@ def flight_search(lat, lang, depart, adults, date):
         return parse_flights_search(response.json())
     except BaseException:
         print("Invalid Response")
-    print(response.json)
+    #print(response.json)
     return parse_flights_search(response.json(), arrival_airport_address, depart_airport_address)
 
 
@@ -260,7 +252,9 @@ def parse_attraction_details(file_name):
 
 
 if __name__ == '__main__':
+    pass
+    # flight_search(41.8714865, -72.3686931, "Hartford", 3, "2021-10-11")
     # print(travel_search("France"))
     # print(hotel_search(51.51924, -0.096654, 4, 2, "2021-10-11", 3, 100, 300))
     # print(attractions_search("Berlin"))
-    flight_search(51.51924, -0.096654, "Dallas", 3, "2021-12-25")
+    # flight_search(51.51924, -0.096654, "Hartford", 3, "2021-12-25")
