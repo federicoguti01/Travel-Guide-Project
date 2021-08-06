@@ -156,8 +156,9 @@ def flight_search(lat, lang, depart, adults, date):
     home_airport_code = getManyIATA(home_airport_coor)
     arrival_airport_address = reverseGeocode(home_airport_coor[0], home_airport_coor[1])
     destination_name = reverseGeoCity(lat, lang)
-    destination_airport_coor = getGeocode(destination_name)
-    destination_airpot_code = getManyIATA(destination_airport_coor)
+    coords = [lat, lang]
+#     destination_airport_coor = getGeocode(destination_name)
+    destination_airpot_code = getManyIATA(coords)
     if destination_airpot_code[0] == home_airport_code[0]:
       return ("Airports are the same")
     depart_airport_address = reverseGeocode(lat, lang)
